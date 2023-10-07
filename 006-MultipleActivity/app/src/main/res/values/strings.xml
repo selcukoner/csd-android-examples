@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">006-MultipleActivity</string>
+
+    <string name="button_register_text"> Register</string>
+    <string name="button_login_text"> Login </string>
+    <string name="button_close_text"> Close</string>
+
+    <string name="edittext_username_hint"> Input username</string>
+    <string name="edittext_password_hint"> Input password</string>
+
+    <!--Payment Activity-->
+    <string name="edittext_product_name_hint"> Product Name</string>
+    <string name="edittext_product_price_hint"> Product Price</string>
+    <string name="edittext_product_amount_hint"> Product Amount</string>
+
+    <string name="button_calculate_text"> Calculate</string>
+    <string name="button_clear_text"> Clear</string>
+    <string name="button_exit_text"> Close</string>
+    <string name="close_alert_dialog_title"> Alert </string>
+    <string name="alert_dialog_yes_button_text"> Yes </string>
+    <string name="alert_dialog_no_button_text"> No </string>
+    <string name="alert_dialog_message_text"> Are you sure to close ? </string>
+
+
+
+</resources>
