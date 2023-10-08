@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import org.cso.android.app.multipleactivity.binding.RegisterBirthDateStringConverter
 import org.cso.android.app.multipleactivity.databinding.ActivityRegisterBinding
 import org.cso.android.app.multipleactivity.viewmodel.RegisterActivityListenersViewModel
 import org.cso.android.app.multipleactivity.viewmodel.RegisterInfo
@@ -11,14 +12,25 @@ import org.cso.android.app.multipleactivity.viewmodel.RegisterInfo
 class RegisterActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityRegisterBinding
 
-
-
-
-
     fun registerButtonClicked()
     {
-        Toast.makeText(this, "${mBinding.registerInfo.toString()}", Toast.LENGTH_SHORT).show()
+        mBinding.resultText = mBinding.registerInfo.toString()
+    }
 
+    fun closeButtonClicked()
+    {
+        finish()
+    }
+
+    private fun clearResultText()
+    {
+        mBinding.resultText = ""
+    }
+    fun clearButtonClicked()
+    {
+        mBinding.registerInfo = RegisterInfo()
+        mBinding.confirmPasword =""
+        clearResultText()
     }
 
     private fun initViewModels()

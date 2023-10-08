@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 object RegisterBirthDateStringConverter {
-    private val mformatter = DateTimeFormatter.ofPattern("dd//MM/yyyy")
+    private val mformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
     private var mFail = false
 
@@ -24,11 +24,12 @@ object RegisterBirthDateStringConverter {
         var result =  LocalDate.of(1990,1,1)
         try {
             mFail = false
-            result = LocalDate.parse(str)
+            result = LocalDate.parse(str, mformatter)
         }catch (ignore: DateTimeParseException){
             mFail = true
 
         }
+
         return  result
     }
 

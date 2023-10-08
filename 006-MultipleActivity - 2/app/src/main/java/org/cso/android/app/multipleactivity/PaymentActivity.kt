@@ -50,20 +50,30 @@ class PaymentActivity : AppCompatActivity() {
 
     fun clearButtonClicked()
     {
+        /*
         for (view in mBinding.paymentActivityProductInfo.children){
             if(view is EditText )
                 view.setText("")
         }
         mBinding.paymentActivityTextView.text = ""
+        */
+        mBinding.paymentInfo = PaymentInfo()
+        mBinding.result = ""
+    }
+
+
+    fun exitButtonClicked()
+    {
+        TODO("NOT implemented yet")
     }
 
     fun closeButtonClicked()
     {
         AlertDialog.Builder(this)
-            .setTitle(R.string.close_alert_dialog_title)
-            .setMessage(R.string.alert_dialog_message_text)
-            .setPositiveButton(R.string.alert_dialog_yes_button_text, {_,_ -> finish()})
-            .setNegativeButton(R.string.alert_dialog_no_button_text, {_,_ -> })
+            .setTitle(R.string.alert_dialog_close_title)
+            .setMessage(R.string.alert_dialog_close_message_text)
+            .setPositiveButton(R.string.alert_dialog_close_positive_button_text, {_,_ -> finish()})
+            .setNegativeButton(R.string.alert_dialog_close_negative_button_text, {_,_ -> })
             .create()
             .show()
     }

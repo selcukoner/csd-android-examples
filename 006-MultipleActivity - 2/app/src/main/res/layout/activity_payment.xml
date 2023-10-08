@@ -86,9 +86,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{() -> viewModel.handleExitButton()}"
+                android:onClick="@{() -> viewModel.handleCloseButton()}"
                 android:text="@string/button_close_text" />
         </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.handleExitButton()}"
+            android:text="@string/button_exit_text" />
 
         <TextView
             android:id="@+id/paymentActivityTextView"

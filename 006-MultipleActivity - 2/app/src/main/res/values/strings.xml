@@ -15,11 +15,11 @@
 
     <string name="button_calculate_text"> Calculate</string>
     <string name="button_clear_text"> Clear</string>
-    <string name="button_exit_text"> Close</string>
-    <string name="close_alert_dialog_title"> Alert </string>
-    <string name="alert_dialog_yes_button_text"> Yes </string>
-    <string name="alert_dialog_no_button_text"> No </string>
-    <string name="alert_dialog_message_text"> Are you sure to close ? </string>
+    <string name="button_exit_text"> Exit </string>
+    <string name="alert_dialog_close_title"> Warning </string>
+    <string name="alert_dialog_close_positive_button_text"> Yes </string>
+    <string name="alert_dialog_close_negative_button_text"> No </string>
+    <string name="alert_dialog_close_message_text"> Are you sure ? </string>
 
     <!-- Register Activity -->
 
@@ -28,6 +28,7 @@
     <string name="edittext_last_name_hint"> Last  Name </string>
     <string name="edittext_email_hint"> Email </string>
     <string name="edittext_birthdate_hint"> Birthdate </string>
+    <string name="switch_middle_name_text"> Middle Name </string>
 
 
 
