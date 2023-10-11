@@ -13,7 +13,6 @@ import org.cso.android.app.multipleactivity.viewmodel.RegisterInfo
 class RegisterActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityRegisterBinding
 
-
     private fun exitAlertDialogPositiveCallback()
     {
         Intent().apply {
@@ -22,7 +21,7 @@ class RegisterActivity : AppCompatActivity() {
         }
         finish()
     }
-
+    
     fun exitButtonClicked()
     {
         AlertDialog.Builder(this)

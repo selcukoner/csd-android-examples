@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mLauncher: ActivityResultLauncher<Intent>
 
-
     private fun activitiesCallback(result : ActivityResult)
     {
         if (result.resultCode != RESULT_OK){
@@ -39,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initPaymentActivityResultLauncher()
+    private fun initActivitiesResultLauncher()
     {
         mLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){activitiesCallback(it)}
     }
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     {
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         mBinding.viewModel = MainActivityListenersViewModel(this)
-        initPaymentActivityResultLauncher()
+        initActivitiesResultLauncher()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

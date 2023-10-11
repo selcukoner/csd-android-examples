@@ -23,7 +23,6 @@ class PaymentActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityPaymentBinding
 
-
     private fun closeAlertDialogPositiveCallback()
     {
         if(mBinding.result!!.isNotEmpty())
@@ -37,14 +36,14 @@ class PaymentActivity : AppCompatActivity() {
 
     private fun checkFail(): Boolean
     {
-        if(org.cso.android.app.multipleactivity.library.databinding.converter.PaymentQuantityToStringConverter.fail){
-            Toast.makeText(this, org.cso.android.app.multipleactivity.library.databinding.converter.PaymentQuantityToStringConverter.failStr, Toast.LENGTH_SHORT).show()
+        if(PaymentQuantityToStringConverter.fail){
+            Toast.makeText(this, PaymentQuantityToStringConverter.failStr, Toast.LENGTH_SHORT).show()
         }
 
-        if(org.cso.android.app.multipleactivity.library.databinding.converter.PaymentUnitPriceToStringConverter.fail){
-            Toast.makeText(this, org.cso.android.app.multipleactivity.library.databinding.converter.PaymentUnitPriceToStringConverter.failStr, Toast.LENGTH_SHORT).show()
+        if(PaymentUnitPriceToStringConverter.fail){
+            Toast.makeText(this, PaymentUnitPriceToStringConverter.failStr, Toast.LENGTH_SHORT).show()
         }
-        return org.cso.android.app.multipleactivity.library.databinding.converter.PaymentQuantityToStringConverter.fail || org.cso.android.app.multipleactivity.library.databinding.converter.PaymentUnitPriceToStringConverter.fail
+        return PaymentQuantityToStringConverter.fail || PaymentUnitPriceToStringConverter.fail
     }
 
 
@@ -109,8 +108,8 @@ class PaymentActivity : AppCompatActivity() {
         mBinding.paymentInfo = PaymentInfo()
         mBinding.result =""
 
-        org.cso.android.app.multipleactivity.library.databinding.converter.PaymentQuantityToStringConverter.failStr = "Invalid Quantity"
-        org.cso.android.app.multipleactivity.library.databinding.converter.PaymentUnitPriceToStringConverter.failStr = "Invalid unit price"
+        PaymentQuantityToStringConverter.failStr = "Invalid Quantity"
+        PaymentUnitPriceToStringConverter.failStr = "Invalid unit price"
     }
 
     private fun initBinding()

@@ -25,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityLoginBinding
     private lateinit var mLauncher:ActivityResultLauncher<Intent>
 
-
     //exit button study case
     private fun exitAlertDialogPositiveCallback()
     {
