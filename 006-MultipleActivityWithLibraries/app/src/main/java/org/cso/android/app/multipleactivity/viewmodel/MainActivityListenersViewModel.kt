@@ -9,4 +9,5 @@ class MainActivityListenersViewModel(activity: MainActivity) {
     fun handleRegisterButton() = mWeakReference.get()?.registerButtonClicked()
     fun handleLoginButton() = mWeakReference.get()?.loginButtonClicked()
     fun handleCloseButton() = mWeakReference.get()?.closeButtonClicked()
+
 }

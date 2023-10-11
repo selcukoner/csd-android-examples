@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import org.cso.android.app.multipleactivity.library.databinding.converter.PaymentQuantityToStringConverter
 import org.cso.android.app.multipleactivity.library.databinding.converter.PaymentUnitPriceToStringConverter
 import org.cso.android.app.multipleactivity.databinding.ActivityPaymentBinding
+import org.cso.android.app.multipleactivity.keys.EXIT
 import org.cso.android.app.multipleactivity.keys.LOGIN_INFO
 import org.cso.android.app.multipleactivity.keys.PRODUCT_NAME
 import org.cso.android.app.multipleactivity.keys.TOTAL_PRICE
@@ -62,21 +63,29 @@ class PaymentActivity : AppCompatActivity() {
 
     fun clearButtonClicked()
     {
-        /*
-        for (view in mBinding.paymentActivityProductInfo.children){
-            if(view is EditText )
-                view.setText("")
-        }
-        mBinding.paymentActivityTextView.text = ""
-        */
         mBinding.paymentInfo = PaymentInfo()
         mBinding.result = ""
     }
 
+    //exit button study case
+    fun exitAlertDialogPositiveCallback()
+    {
+        Intent().apply {
+            putExtra(EXIT,true)
+            setResult(RESULT_OK, this)
+        }
+        finish()
+    }
 
     fun exitButtonClicked()
     {
-        TODO("NOT implemented yet")
+        AlertDialog.Builder(this)
+            .setTitle(R.string.alert_dialog_close_title)
+            .setMessage(R.string.alert_dialog_exit_message_text)
+            .setPositiveButton(R.string.alert_dialog_close_positive_button_text, {_,_ -> exitAlertDialogPositiveCallback()})
+            .setNegativeButton(R.string.alert_dialog_close_negative_button_text, {_,_ -> })
+            .create()
+            .show()
     }
 
     fun closeButtonClicked()

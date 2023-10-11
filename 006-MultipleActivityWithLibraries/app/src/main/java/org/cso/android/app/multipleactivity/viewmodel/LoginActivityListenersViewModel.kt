@@ -7,4 +7,5 @@ class LoginActivityListenersViewModel(activity: LoginActivity) {
     private val mWeakReference = WeakReference(activity)
 
     fun handleLoginButton() = mWeakReference.get()?.loginButtonClicked()
+    fun handleExitButton() = mWeakReference.get()?.exitButtonClicked()
 }

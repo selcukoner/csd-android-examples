@@ -20,6 +20,7 @@
     <string name="alert_dialog_close_positive_button_text"> Yes </string>
     <string name="alert_dialog_close_negative_button_text"> No </string>
     <string name="alert_dialog_close_message_text"> Are you sure ? </string>
+    <string name="alert_dialog_exit_message_text"> Are you to exit ? </string>
 
     <!-- Register Activity -->
 

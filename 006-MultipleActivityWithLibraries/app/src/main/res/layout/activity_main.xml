@@ -33,6 +33,9 @@
             android:layout_height="wrap_content"
             android:text="@string/button_close_text"
             android:onClick="@{() -> viewModel.handleCloseButton()}"/>
+
+
+
     </LinearLayout>
 </layout>
 

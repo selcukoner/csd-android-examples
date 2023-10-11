@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import org.cso.android.app.multipleactivity.databinding.ActivityLoginBinding
+import org.cso.android.app.multipleactivity.keys.EXIT
 import org.cso.android.app.multipleactivity.keys.LOGIN_INFO
 import org.cso.android.app.multipleactivity.keys.PRODUCT_NAME
 import org.cso.android.app.multipleactivity.keys.TOTAL_PRICE
@@ -24,16 +26,46 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mLauncher:ActivityResultLauncher<Intent>
 
 
+    //exit button study case
+    private fun exitAlertDialogPositiveCallback()
+    {
+        Intent().apply {
+            putExtra(EXIT,true)
+            setResult(RESULT_OK, this)
+        }
+        finish()
+    }
+
+    fun exitButtonClicked()
+    {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.alert_dialog_close_title)
+            .setMessage(R.string.alert_dialog_exit_message_text)
+            .setPositiveButton(R.string.alert_dialog_close_positive_button_text, {_,_ -> exitAlertDialogPositiveCallback()})
+            .setNegativeButton(R.string.alert_dialog_close_negative_button_text, {_,_ -> })
+            .create()
+            .show()
+    }
+
     private fun paymentActivityCallback(result : ActivityResult)
     {
         if (result.resultCode != RESULT_OK){
-            Toast.makeText(this,"hata",Toast.LENGTH_SHORT).show()
             return
         }
 
         val data = result.data
         val productName = data?.getStringExtra(PRODUCT_NAME)
         val totalPrice = data?.getDoubleExtra(TOTAL_PRICE, 0.0)
+        val exit = data?.getBooleanExtra(EXIT, false)
+
+        if(exit == true){
+            Intent().apply {
+                putExtra(EXIT,true)
+                setResult(RESULT_OK, this)
+            }
+            finish()
+        }
+
         "%.2f paid for %s".format(totalPrice,productName)
             .apply { Toast.makeText(this@LoginActivity,this, Toast.LENGTH_SHORT).show() }
     }
