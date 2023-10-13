@@ -8,6 +8,8 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
+import org.cso.android.activity.LoginActivity
+
 import org.cso.android.app.multipleactivity.databinding.ActivityMainBinding
 import org.cso.android.app.multipleactivity.keys.EXIT
 import org.cso.android.app.multipleactivity.keys.LOGIN_INFO
@@ -57,18 +59,24 @@ class MainActivity : AppCompatActivity() {
 
     fun registerButtonClicked()
     {
+
         //startActivity(Intent(this,RegisterActivity::class.java))
         Intent(this,RegisterActivity::class.java).apply {
             mLauncher.launch(this)
         }
+
+
         Toast.makeText(this,"register",Toast.LENGTH_SHORT).show()
     }
 
     fun loginButtonClicked()
     {
+
         Intent(this,LoginActivity::class.java).apply {
             mLauncher.launch(this)
         }
+
+
         //startActivity(Intent(this,LoginActivity::class.java))
     }
 

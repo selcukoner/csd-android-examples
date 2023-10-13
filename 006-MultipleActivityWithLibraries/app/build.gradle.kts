@@ -45,11 +45,12 @@ android {
 
 dependencies {
 
-   // coreLibraryDesugaring("com.android.tools:desugar_jdk_libs_configuration:2.0.3")
-    implementation(project(":DataBindingConverterModule"))
-
-
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
+
+     implementation(files("libs/org-cso-android-activity-release-20.0.0.aar"))
+    // implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+
+    implementation(project(":DataBindingConverterModule"))
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

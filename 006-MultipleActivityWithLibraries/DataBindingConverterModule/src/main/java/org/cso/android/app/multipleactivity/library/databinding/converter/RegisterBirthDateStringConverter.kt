@@ -1,14 +1,15 @@
 package org.cso.android.app.multipleactivity.library.databinding.converter
 
 import androidx.databinding.InverseMethod
+import org.csystem.android.util.datetime.DateTimeFormatterUtil
+
 import java.time.LocalDate
 
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 
 object RegisterBirthDateStringConverter {
-    private val mformatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-
+    private val mformatter = DateTimeFormatterUtil.DATE_FORMATTER_TR //DateTimeFormatter.ofPattern("dd/MM/yyyy")
     private var mFail = false
 
     val fail: Boolean

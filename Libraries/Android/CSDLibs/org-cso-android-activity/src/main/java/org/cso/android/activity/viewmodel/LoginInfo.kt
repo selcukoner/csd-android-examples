@@ -1,4 +1,4 @@
-package org.cso.android.app.multipleactivity.viewmodel
+package org.cso.android.activity.viewmodel
 
 import java.io.Serializable
 import java.time.LocalDateTime

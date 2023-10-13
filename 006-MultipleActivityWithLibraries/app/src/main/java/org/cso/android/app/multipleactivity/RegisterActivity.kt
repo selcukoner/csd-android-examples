@@ -3,6 +3,7 @@ package org.cso.android.app.multipleactivity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import org.cso.android.app.multipleactivity.databinding.ActivityRegisterBinding
@@ -34,6 +35,7 @@ class RegisterActivity : AppCompatActivity() {
     }
     fun registerButtonClicked()
     {
+
         mBinding.resultText = mBinding.registerInfo.toString()
     }
 

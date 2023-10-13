@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CSDLibs"
 include(":org-cso-android-util-datetime")
+include(":org-cso-android-activity")

@@ -8,7 +8,7 @@
         <import type="org.cso.android.app.multipleactivity.library.databinding.converter.PaymentQuantityToStringConverter"/>
         <import type="org.cso.android.app.multipleactivity.library.databinding.converter.PaymentUnitPriceToStringConverter"/>
         <import type="org.cso.android.app.multipleactivity.viewmodel.PaymentInfo"/>
-        <import type="org.cso.android.app.multipleactivity.viewmodel.LoginInfo"/>
+        <import type="org.cso.android.activity.viewmodel.LoginInfo"/>
         <import type="java.time.format.DateTimeFormatter"/>
 
         <variable name="viewModel" type="PaymentActivityListenersViewModel" />

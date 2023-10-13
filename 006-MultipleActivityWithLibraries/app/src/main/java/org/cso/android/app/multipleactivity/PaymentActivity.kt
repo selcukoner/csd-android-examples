@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
+import org.cso.android.activity.viewmodel.LoginInfo
 import org.cso.android.app.multipleactivity.library.databinding.converter.PaymentQuantityToStringConverter
 import org.cso.android.app.multipleactivity.library.databinding.converter.PaymentUnitPriceToStringConverter
 import org.cso.android.app.multipleactivity.databinding.ActivityPaymentBinding
@@ -15,7 +16,6 @@ import org.cso.android.app.multipleactivity.keys.LOGIN_INFO
 import org.cso.android.app.multipleactivity.keys.PRODUCT_NAME
 import org.cso.android.app.multipleactivity.keys.TOTAL_PRICE
 
-import org.cso.android.app.multipleactivity.viewmodel.LoginInfo
 import org.cso.android.app.multipleactivity.viewmodel.PaymentActivityListenersViewModel
 import org.cso.android.app.multipleactivity.viewmodel.PaymentInfo
 
