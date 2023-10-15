@@ -1,0 +1,19 @@
+package org.cso.android.app.hilt.datetime
+
+import org.cso.android.util.datetime.di.module.annotation.SystemLocalTimeInterceptor
+import org.cso.android.util.datetime.di.module.formatter.annotation.LocalTimeFormatterInterceptor
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import javax.inject.Inject
+
+class TimeInfo @Inject constructor() {
+    @Inject
+    @SystemLocalTimeInterceptor
+    lateinit var time: LocalTime
+
+    @Inject
+    @LocalTimeFormatterInterceptor
+    lateinit var formatter: DateTimeFormatter
+
+    override fun toString() = formatter.format(time)
+}

@@ -21,6 +21,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CSDLibs"
-include(":org-cso-android-util-datetime")
-include(":org-cso-android-activity")
+rootProject.name = "007-HiltApp"
+include(":app")
+ 
