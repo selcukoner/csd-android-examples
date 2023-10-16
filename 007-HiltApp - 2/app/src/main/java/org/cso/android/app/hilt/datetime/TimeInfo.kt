@@ -1,7 +1,7 @@
 package org.cso.android.app.hilt.datetime
 
-import org.cso.android.util.datetime.di.module.annotation.SystemLocalTimeInterceptor
-import org.cso.android.util.datetime.di.module.formatter.annotation.LocalTimeFormatterInterceptor
+import org.csystem.android.util.datetime.di.module.annotation.SystemLocalTimeInterceptor
+import org.csystem.android.util.datetime.di.module.formatter.annotation.LocalTimeFormatterInterceptor
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject

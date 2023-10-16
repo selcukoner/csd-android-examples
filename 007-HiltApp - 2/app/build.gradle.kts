@@ -43,7 +43,7 @@ android {
 
 dependencies {
 
-    implementation(files("libs/org-cso-android-util-datetime-release-21.0.0.aar"))
+   // implementation(files("libs/org-cso-android-util-datetime-release-21.0.0.aar")) //removed
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
@@ -57,6 +57,9 @@ dependencies {
 
     implementation ("com.google.dagger:hilt-android:2.47")
     kapt("com.google.dagger:hilt-compiler:2.47") //For Kotlin
+
+    implementation("org.csystem.android:org-csystem-android-datetime:21.0.0")
+
 }
 
 kapt {
