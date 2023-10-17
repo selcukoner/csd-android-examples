@@ -17,6 +17,5 @@ class DateInfo @Inject constructor(@ActivityContext var context: Context,
     init {
         Toast.makeText(context, "DateInfo created -> ${this}", Toast.LENGTH_SHORT).show()
     }
-
     override fun toString() = formatter.format(date)
 }

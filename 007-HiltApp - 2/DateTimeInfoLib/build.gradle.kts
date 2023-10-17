@@ -1,22 +1,19 @@
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt") //For Kotlin
     id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "org.cso.android.app.hilt"
+    namespace = "org.cso.android.app.hilt.datetime"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "org.cso.android.app.hilt"
         minSdk = 26
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -36,24 +33,13 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
-
-    dataBinding.enable = true
-
 }
 
 dependencies {
 
-   // implementation(files("libs/org-cso-android-util-datetime-release-21.0.0.aar")) //removed
-
-    implementation(project(":DateTimeInfoLib")) //datetime module dependency
-    implementation(project(":CalculatorLib")) //calculator module dependency
-    implementation(project(":ConverterLib")) //converter module dependency
-
-
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -64,7 +50,6 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.47") //For Kotlin
 
     implementation("org.csystem.android:org-csystem-android-datetime:21.0.0")
-
 }
 
 kapt {

@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var dateInfo: DateInfo
 
     @Inject
-    lateinit var timeInfo:TimeInfo
+    lateinit var timeInfo: TimeInfo
 
     @Inject
     @IntAddOperationInterceptor
