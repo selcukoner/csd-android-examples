@@ -38,4 +38,13 @@
     <string name="message_register_allow_close"> If you close all input will be cleared. Are you sure ? </string>
     <string name="message_enable_show_password"> If password is visible it can be dangerous. Are you sure? </string>
 
+
+    <string-array name="spinner_education_info">
+        <item>Undergraduate</item>
+        <item>Graduate</item>
+        <item>Msc</item>
+        <item>PhD</item>
+    </string-array>
+
+
 </resources>

@@ -3,6 +3,7 @@ package com.cso.android.app.viewsdatabinding
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -54,13 +55,11 @@ class MainActivity : AppCompatActivity() {
 
         if(!confirm(mBinding.password!!, mBinding.confirmPassword!!))
             return null
+
         val name = mBinding.registerInfoViewModel!!.name
         val email = mBinding.registerInfoViewModel!!.email
-
         val userName = mBinding.registerInfoViewModel!!.userName
-
         val birthDate =LocalDate.of(mBinding.year!!.toInt(),mBinding.month!!.toInt(),mBinding.day!!.toInt())
-
 
         return RegisterInfo(name, email, birthDate, userName, mBinding.password!!)
     }
@@ -73,10 +72,7 @@ class MainActivity : AppCompatActivity() {
             if (view is EditText)
                 view.setText("")
         }
-
-
         mBinding.confirmPassword = ""
-
     }
 
     private fun setRegisterInfoVisibility(visibility: Int)
@@ -97,17 +93,34 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    //data binding de view binding enabled is view binding de calışır
-    private fun initBinding()
+
+    private fun initEducationAdapter()
     {
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        val educationInfo = resources.getStringArray(R.array.spinner_education_info)
+        mBinding.educationAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, educationInfo)
+        mBinding.educationSelectedPos = 2
+
+    }
+
+    private fun initViewModels()
+    {
         mBinding.mainActivityViewModel = MainActivityViewModel(this)
         mBinding.registerInfoViewModel = RegisterInfo()
+    }
+    private fun initData()
+    {
+       initViewModels()
         mBinding.show = true
         mBinding.passwordInputType = INPUTTYPE_TEXT_PASSWORD_HIDE
         mBinding.showPasswordButtonText = resources.getString(R.string.button_show_password_text)
+        initEducationAdapter()
 
+    }
 
+    private fun initBinding()
+    {
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        initData()
     }
 
     private fun initViews()

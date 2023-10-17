@@ -6,11 +6,12 @@
     <data>
         <import type="com.cso.android.app.viewsdatabinding.viewmodel.RegisterInfo"/>
         <import type="com.cso.android.app.viewsdatabinding.viewmodel.MainActivityViewModel"/>
+        <import type="android.widget.ArrayAdapter"/>
+
         <variable type="com.cso.android.app.viewsdatabinding.viewmodel.RegisterInfo" name="registerInfoViewModel"/>
         <variable type="com.cso.android.app.viewsdatabinding.viewmodel.MainActivityViewModel" name="mainActivityViewModel"/>
         <variable type="String" name="confirmPassword"/>
         <variable type="boolean" name="accept"/>
-
         <variable type="String" name="result"/>
         <variable type="String" name="day"/>
         <variable type="String" name="month"/>
@@ -19,8 +20,9 @@
         <variable type="int" name="passwordInputType"/>
         <variable type="String" name="showPasswordButtonText"/>
         <variable type="String" name="password"/>
-
         <variable type="boolean" name="allowShowPasswordChecked"/>
+        <variable type="ArrayAdapter&lt;String&gt;" name="educationAdapter"/>
+        <variable type="int" name="educationSelectedPos"/>
 
 
 
@@ -102,6 +104,13 @@
                     android:hint="@string/edittext_year_hint_text"/>
 
             </LinearLayout>
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adapter="@{educationAdapter}"
+                android:selectedItemPosition="@={educationSelectedPos}"
+             />
 
             <EditText
                 android:layout_width="match_parent"
