@@ -13,4 +13,6 @@ class MainActivityListenersViewModel(val activity: MainActivity) {
     fun handleCloseButton() = mWeakReference.get()?.closeButtonClicked()
     fun handleAllowShowPasswordSwitch(checked: Boolean) = mWeakReference.get()?.allowShowPasswordSwitchCheckedChanged(checked)
     fun handleEducationSpinner(pos:Int) = mWeakReference.get()?.educationSpinnerItemSelected(pos)
+    fun handleBirthDateMonthSpinner(pos:Int) = mWeakReference.get()?.birthDateMonthSpinnerItemSelected(pos)
+    fun handleBirthDateYearSpinner(pos:Int) = mWeakReference.get()?.birthDateYearSpinnerItemSelected(pos)
 }

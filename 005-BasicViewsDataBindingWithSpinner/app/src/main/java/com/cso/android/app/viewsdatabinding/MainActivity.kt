@@ -11,6 +11,8 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 
 import com.cso.android.app.viewsdatabinding.databinding.ActivityMainBinding
+import com.cso.android.app.viewsdatabinding.global.INPUTTYPE_TEXT_PASSWORD_HIDE
+import com.cso.android.app.viewsdatabinding.global.INPUTTYPE_TEXT_PASSWORD_SHOW
 
 import com.cso.android.app.viewsdatabinding.viewmodel.MainActivityListenersViewModel
 import com.cso.android.app.viewsdatabinding.viewmodel.RegisterInfo
@@ -22,6 +24,8 @@ import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding // viewBinding true yapılınca bu sınıf uretilir
+
+    private lateinit var mMonths : Array<String>
 
     private fun neutralButtonOnClickedCallcack()
     {
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         val name = mBinding.registerInfoViewModel!!.name
         val email = mBinding.registerInfoViewModel!!.email
         val userName = mBinding.registerInfoViewModel!!.userName
-        val birthDate =LocalDate.of(mBinding.year, mBinding.month + 1, mBinding.day)
+        val birthDate =LocalDate.of(mBinding.yearPos, mBinding.monthPos + 1, mBinding.dayPos)
 
         return RegisterInfo(name, email, birthDate, userName, mBinding.password!!)
     }
@@ -83,25 +87,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initBirthDateTexts()
+    private fun initBirthDateTexts(today: LocalDate)
     {
-        val today = LocalDate.now()
+        mBinding.dayPos = today.dayOfMonth -1
+        mBinding.monthPos = today.monthValue -1
 
-        mBinding.day = today.dayOfMonth
-        mBinding.month = today.monthValue
-        mBinding.year = today.year
+    }
+
+    private fun getDaysByMonthAndYear(monthPos: Int, yearPos: Int) : List<Int>
+    {
+        val max = LocalDate.of(yearPos, monthPos + 1, 1).minusDays(1).dayOfMonth
+
+        return (1..max).toList()
     }
 
 
     private fun initBirthDateAdapters()
     {
-        val days = (1..31).toList()
-        val months = resources.getStringArray(R.array.spinner_months)
-        val years = (1900..LocalDate.now().minusYears(19).year).toList()
+        val today = LocalDate.now()
+        val years = (today.year-100..today.minusYears(19).year).toList()
 
-        mBinding.monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
-        mBinding.dayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, days)
+        mBinding.dayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, getDaysByMonthAndYear(today.monthValue, today.year))
+        mBinding.monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, mMonths)
         mBinding.yearAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
+
+        mBinding.yearPos = mBinding.yearAdapter!!.count - 1
+
+        initBirthDateTexts(today)
     }
 
     private fun initEducationAdapter()
@@ -112,6 +124,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun initBirthDateSpinners()
+    {
+        initBirthDateAdapters()
+    }
     private fun initViewModels()
     {
         mBinding.mainActivityViewModel = MainActivityListenersViewModel(this)
@@ -124,8 +140,7 @@ class MainActivity : AppCompatActivity() {
         mBinding.passwordInputType = INPUTTYPE_TEXT_PASSWORD_HIDE
         mBinding.showPasswordButtonText = resources.getString(R.string.button_show_password_text)
         initEducationAdapter()
-        initBirthDateAdapters()
-
+        initBirthDateSpinners()
     }
 
     private fun initBinding()
@@ -136,8 +151,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews()
     {
+        mMonths = resources.getStringArray(R.array.spinner_months)
         initBinding()
-        initBirthDateTexts()
     }
 
     private fun initialize()
@@ -228,7 +243,7 @@ class MainActivity : AppCompatActivity() {
 
 
         clearEditTexts()
-        initBirthDateTexts()
+        initBirthDateTexts(LocalDate.now())
         mBinding.accept = false
         mBinding.passwordInputType = INPUTTYPE_TEXT_PASSWORD_HIDE
         mBinding.showPasswordButtonText = resources.getString(R.string.button_show_password_text)
@@ -252,4 +267,18 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, mBinding.educationAdapter!!.getItem(pos), Toast.LENGTH_SHORT).show()
     }
 
+
+    fun birthDateMonthSpinnerItemSelected(pos: Int)
+    {
+        mBinding.dayAdapter?.clear()
+
+        val year = mBinding.yearAdapter!!.getItem(mBinding.yearPos)!!.toInt()
+        mBinding.dayAdapter?.addAll(getDaysByMonthAndYear(pos + 1,year))
+    }
+    fun birthDateYearSpinnerItemSelected(pos: Int)
+    {
+        mBinding.dayAdapter?.clear()
+        val year = mBinding.yearAdapter!!.getItem(pos)!!.toInt()
+        mBinding.dayAdapter?.addAll(getDaysByMonthAndYear(mBinding.monthPos + 1, year))
+    }
 }

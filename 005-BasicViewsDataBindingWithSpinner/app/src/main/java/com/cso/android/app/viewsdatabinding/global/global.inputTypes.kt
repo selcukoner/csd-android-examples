@@ -1,4 +1,4 @@
-package com.cso.android.app.viewsdatabinding
+package com.cso.android.app.viewsdatabinding.global
 
 import android.text.InputType
 

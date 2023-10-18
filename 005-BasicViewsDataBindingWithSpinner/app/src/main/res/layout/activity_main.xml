@@ -13,9 +13,10 @@
         <variable type="String" name="confirmPassword"/>
         <variable type="boolean" name="accept"/>
         <variable type="String" name="result"/>
-        <variable type="int" name="day"/>
-        <variable type="int" name="month"/>
-        <variable type="int" name="year"/>
+        <variable type="int" name="dayPos"/>
+        <variable type="int" name="monthPos"/>
+        <variable type="int" name="yearPos"/>
+
         <variable type="Object" name="show"/>
         <variable type="int" name="passwordInputType"/>
         <variable type="String" name="showPasswordButtonText"/>
@@ -82,21 +83,26 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:adapter="@{dayAdapter}"
-                    android:selectedItemPosition="@={day}"/>
+                    android:selectedItemPosition="@={dayPos}"
+                   />
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:adapter="@{monthAdapter}"
-                    android:selectedItemPosition="@={month}"/>
+                    android:selectedItemPosition="@={monthPos}"
+                    android:onItemSelected="@{ (av, v, pos, id) -> mainActivityViewModel.handleBirthDateMonthSpinner(pos)}"
+                    />
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:adapter="@{yearAdapter}"
-                    android:selectedItemPosition="@={month}"/>
+                    android:selectedItemPosition="@={yearPos}"
+                    android:onItemSelected="@{ (av, v, pos, id) -> mainActivityViewModel.handleBirthDateYearSpinner(pos)}"
+                    />
 
             </LinearLayout>
 
