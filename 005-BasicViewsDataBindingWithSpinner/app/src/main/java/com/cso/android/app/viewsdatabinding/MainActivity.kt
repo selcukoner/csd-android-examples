@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
         val name = mBinding.registerInfoViewModel!!.name
         val email = mBinding.registerInfoViewModel!!.email
         val userName = mBinding.registerInfoViewModel!!.userName
-        val birthDate =LocalDate.of(mBinding.year!!.toInt(),mBinding.month!!.toInt(),mBinding.day!!.toInt())
+        val birthDate =LocalDate.of(mBinding.year, mBinding.month + 1, mBinding.day)
 
         return RegisterInfo(name, email, birthDate, userName, mBinding.password!!)
     }
@@ -87,10 +87,21 @@ class MainActivity : AppCompatActivity() {
     {
         val today = LocalDate.now()
 
-        mBinding.day = today.dayOfMonth.toString()
-        mBinding.month = today.monthValue.toString()
-        mBinding.year = today.year.toString()
+        mBinding.day = today.dayOfMonth
+        mBinding.month = today.monthValue
+        mBinding.year = today.year
+    }
 
+
+    private fun initBirthDateAdapters()
+    {
+        val days = (1..31).toList()
+        val months = resources.getStringArray(R.array.spinner_months)
+        val years = (1900..LocalDate.now().minusYears(19).year).toList()
+
+        mBinding.monthAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, months)
+        mBinding.dayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, days)
+        mBinding.yearAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, years)
     }
 
     private fun initEducationAdapter()
@@ -108,11 +119,12 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initData()
     {
-       initViewModels()
+        initViewModels()
         mBinding.show = true
         mBinding.passwordInputType = INPUTTYPE_TEXT_PASSWORD_HIDE
         mBinding.showPasswordButtonText = resources.getString(R.string.button_show_password_text)
         initEducationAdapter()
+        initBirthDateAdapters()
 
     }
 
