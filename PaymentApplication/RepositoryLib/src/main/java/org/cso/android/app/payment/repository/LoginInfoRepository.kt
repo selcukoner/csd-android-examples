@@ -7,6 +7,21 @@ import java.util.Optional
 import javax.inject.Inject
 
 class LoginInfoRepository @Inject constructor(@ApplicationContext context: Context): ILoginInfoRepository {
+    override fun findByUserNAme(userName: String): List<LoginInfo>
+    {
+        TODO("Not yet implemented")
+    }
+
+    override fun findSuccessByUserName(userName: String): List<LoginInfo>
+    {
+        TODO("Not yet implemented")
+    }
+
+    override fun findFailsByUserName(userName: String): List<LoginInfo>
+    {
+        TODO("Not yet implemented")
+    }
+
     override fun count(): Long
     {
         TODO("Not yet implemented")
