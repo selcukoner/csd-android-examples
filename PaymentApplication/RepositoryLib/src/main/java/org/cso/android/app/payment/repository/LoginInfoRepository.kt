@@ -6,7 +6,8 @@ import org.cso.android.app.payment.repository.entity.LoginInfo
 import java.util.Optional
 import javax.inject.Inject
 
-class LoginInfoRepository @Inject constructor(@ApplicationContext context: Context): ILoginInfoRepository {
+class LoginInfoRepository @Inject constructor(@ApplicationContext var context: Context): ILoginInfoRepository {
+
     override fun findByUserNAme(userName: String): List<LoginInfo>
     {
         TODO("Not yet implemented")
@@ -19,6 +20,14 @@ class LoginInfoRepository @Inject constructor(@ApplicationContext context: Conte
 
     override fun findFailsByUserName(userName: String): List<LoginInfo>
     {
+        TODO("Not yet implemented")
+    }
+
+    override fun findLastSuccessByUserName(userName: String): List<LoginInfo> {
+        TODO("Not yet implemented")
+    }
+
+    override fun findLastFailByUserName(userName: String): List<LoginInfo> {
         TODO("Not yet implemented")
     }
 
