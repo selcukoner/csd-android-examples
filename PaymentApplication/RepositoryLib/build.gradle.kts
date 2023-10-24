@@ -38,7 +38,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     testImplementation("junit:junit:4.13.2")
@@ -47,8 +47,8 @@ dependencies {
 
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 
-    implementation ("com.google.dagger:hilt-android:2.47")
-    kapt("com.google.dagger:hilt-compiler:2.47") //For Kotlin
+    implementation ("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-compiler:2.48") //For Kotlin
 
     implementation("com.karandev:com-karandev-util-data:20.0.0")
 
