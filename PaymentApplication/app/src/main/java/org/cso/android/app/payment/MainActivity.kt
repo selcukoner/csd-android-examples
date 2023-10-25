@@ -17,7 +17,6 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
 
-
     private fun initialize()
     {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)

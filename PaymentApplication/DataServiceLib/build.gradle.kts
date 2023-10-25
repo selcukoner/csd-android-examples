@@ -51,6 +51,8 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.48") //For Kotlin
 
     implementation("com.karandev:com-karandev-util-data:20.0.0")
+
+    implementation("org.mapstruct:mapstruct:1.5.5.Final") // MapStruct
 }
 
 
