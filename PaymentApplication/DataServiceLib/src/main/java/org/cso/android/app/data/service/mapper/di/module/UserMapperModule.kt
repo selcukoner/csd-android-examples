@@ -1,4 +1,4 @@
-package org.cso.android.app.data.service.module
+package org.cso.android.app.data.service.mapper.di.module
 
 import dagger.Binds
 import dagger.Module
