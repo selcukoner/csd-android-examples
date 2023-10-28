@@ -8,7 +8,6 @@ import org.cso.android.app.data.service.mapper.ILoginInfoMapper
 import org.cso.android.app.data.service.mapper.IUserMapper
 import org.cso.android.app.data.service.mapper.di.module.annotation.UserMapperInterceptor
 import org.cso.android.app.payment.repository.dal.PaymentApplicationHelper
-import org.cso.android.app.payment.repository.entity.LoginInfo
 import javax.inject.Inject
 
 class PaymentApplicationDataService @Inject constructor(
@@ -22,12 +21,12 @@ class PaymentApplicationDataService @Inject constructor(
     fun checkAndSaveLoginInfo(loginInfoDTO: LoginInfoDTO): Boolean
     {
         try {
-            if(!mPaymentApplicationHelper.existsUserByUserName(loginInfoDTO.userName))
+            if(!mPaymentApplicationHelper.existsUserByUserName(loginInfoDTO.username))
                 return false
 
             val loginInfo = mLoginInfoMapper.toLoginInfo(loginInfoDTO)
 
-            if(mPaymentApplicationHelper.existsUserByUserNameAndPassword(loginInfoDTO.userName,loginInfoDTO.password))
+            if(mPaymentApplicationHelper.existsUserByUserNameAndPassword(loginInfoDTO.username,loginInfoDTO.password))
                 mPaymentApplicationHelper.saveLoginInfo(loginInfo)
             else
                 mPaymentApplicationHelper.saveLoginInfo(loginInfo.also { it.success =false })
