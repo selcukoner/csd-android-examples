@@ -6,9 +6,11 @@
     <data>
         <import type="org.cso.android.app.payment.viewmodel.RegisterActivityListenerViewModel"/>
          <import type="org.cso.android.app.data.service.dto.UserSaveDTO"/>
+         <import type="org.cso.android.app.payment.converter.DateStringConverter"/>
 
         <variable name="viewModel" type="RegisterActivityListenerViewModel" />
         <variable name="user" type="UserSaveDTO" />
+
 
     </data>
 
@@ -19,49 +21,60 @@
         tools:context=".RegisterActivity">
 
         <EditText
-            android:id="@+id/editTextText2"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
+            android:hint="@string/edittext_username_hint_text"
             android:text="@={user.userName}"
              />
 
         <EditText
-            android:id="@+id/editTextTextPassword2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPassword"
+            android:hint="@string/edittext_password_hint_text"
             android:text="@={user.password}"/>
 
         <EditText
-            android:id="@+id/editTextText3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="text"
+            android:hint="@string/edittext_first_name_hint_text"
             android:text="@={user.firstName}"
              />
 
+
         <EditText
-            android:id="@+id/editTextText4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/edittext_middle_name_hint_text"
+            android:text="@={user.middleName}"
+            android:inputType="text"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/edittext_last_name_hint_text"
             android:text="@={user.lastName}"
             android:inputType="text"
              />
 
         <EditText
-            android:id="@+id/editTextDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/edittext_birth_date_name_hint_text"
+            android:text="@={DateStringConverter.INSTANCE.toStr(user.birthDate)}"
             android:inputType="date" />
 
         <Button
-            android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/button_register_text"
