@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <import type="org.cso.android.app.payment.viewmodel.OperationsActivityListenerViewModel"/>
-        <variable name="viewModel" type="OperationsActivityListenerViewModel" />
-        
+        <import type="org.cso.android.app.payment.viewmodel.LoginInformationActivityListenerViewModel"/>
+        <variable name="viewModel" type="LoginInformationActivityListenerViewModel" />
     </data>
-    
+
     <LinearLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".OperationsActivity">
+        tools:context=".LoginInformationActivity">
+
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_payment_text"
-            android:onClick="@{() -> viewModel.handlePaymentButton()}"/>
+            android:text="@string/button_success_logins_information_text"
+            android:onClick="@{() -> viewModel.handleSuccessLoginsButton()}"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_login_information_text"
-            android:onClick="@{() -> viewModel.handleLoginInformationButton()}"/>
+            android:text="@string/button_fail_logins_information_text"
+            android:onClick="@{() -> viewModel.handleFailLoginsInformationButton()}"/>
 
         <Button
             android:layout_width="match_parent"
@@ -33,6 +32,5 @@
             android:text="@string/button_close_text"
             android:onClick="@{() -> viewModel.handleCloseButton()}"/>
     </LinearLayout>
-
 </layout>
 
