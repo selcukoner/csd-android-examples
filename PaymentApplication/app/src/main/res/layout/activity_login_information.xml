@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="org.cso.android.app.payment.viewmodel.LoginInformationActivityListenerViewModel"/>
+        <import type="org.cso.android.app.data.service.dto.LoginInfoStatusDTO"/>
+        <import type="android.widget.ArrayAdapter"/>
         <variable name="viewModel" type="LoginInformationActivityListenerViewModel" />
+        <variable name="adapter" type="ArrayAdapter&lt;LoginInfoStatusDTO&gt;" />
     </data>
 
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -31,6 +34,12 @@
             android:layout_height="wrap_content"
             android:text="@string/button_close_text"
             android:onClick="@{() -> viewModel.handleCloseButton()}"/>
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adapter="@{adapter}"
+            />
     </LinearLayout>
 </layout>
 

@@ -5,13 +5,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
+import org.cso.android.app.data.service.dto.LoginInfoDTO
 import org.cso.android.app.payment.databinding.ActivityOperationsBinding
+import org.cso.android.app.payment.global.keys.LOGIN_INFO
 import org.cso.android.app.payment.viewmodel.OperationsActivityListenerViewModel
 
 
 class OperationsActivity : AppCompatActivity() {
     private lateinit var mBinding : ActivityOperationsBinding
 
+    private lateinit var mLoginInfo : LoginInfoDTO
+    private fun initLoginInfo()
+    {
+        mLoginInfo =  if(android.os.Build.VERSION.SDK_INT < 33)
+            intent.getSerializableExtra(LOGIN_INFO) as LoginInfoDTO
+        else
+            intent.getSerializableExtra(LOGIN_INFO, LoginInfoDTO::class.java)!!
+    }
     private fun initBinding()
     {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_operations)
@@ -21,6 +31,7 @@ class OperationsActivity : AppCompatActivity() {
     private fun initialize()
     {
         initBinding()
+        initLoginInfo()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +40,12 @@ class OperationsActivity : AppCompatActivity() {
 
     fun paymentButtonClicked()
     {
-        Intent(this, PaymentActivity::class.java).apply { startActivity(this) }
+        Intent(this, PaymentActivity::class.java).apply {putExtra(LOGIN_INFO, mLoginInfo); startActivity(this) }
     }
 
     fun loginInformationButtonClicked()
     {
-        Intent(this, LoginInformationActivity::class.java).apply { startActivity(this) }
+        Intent(this, LoginInformationActivity::class.java).apply {putExtra(LOGIN_INFO, mLoginInfo);  startActivity(this) }
     }
 
     fun closButtonClicked()

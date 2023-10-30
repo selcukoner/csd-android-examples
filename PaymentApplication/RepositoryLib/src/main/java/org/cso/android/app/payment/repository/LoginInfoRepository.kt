@@ -103,7 +103,7 @@ class LoginInfoRepository @Inject constructor(@ApplicationContext var context: C
 
     override fun findFailsByUserName(username: String): List<LoginInfo>
     {
-        return context.openFileInput(LOGIN_INFO_FILE).use { findSuccessByUserNameCallback(it, username) }
+        return context.openFileInput(LOGIN_INFO_FILE).use { findFailsByUserNameCallback(it, username) }
     }
 
 

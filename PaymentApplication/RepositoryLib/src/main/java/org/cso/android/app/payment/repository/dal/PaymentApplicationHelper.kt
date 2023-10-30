@@ -75,7 +75,7 @@ class PaymentApplicationHelper @Inject constructor() {
     fun findSuccessLoginInfoByUserName(username: String): List<LoginInfo>
     {
         try {
-            return loginInfoRepository.findByUserName(username)
+            return loginInfoRepository.findSuccessByUserName(username)
         }
         catch (ex: Throwable){
             throw RepositoryException("PaymentApplicationHelper.findSuccessLoginInfoByUserName", ex)
@@ -85,7 +85,7 @@ class PaymentApplicationHelper @Inject constructor() {
     fun findFailLoginInfoByUserName(username: String): List<LoginInfo>
     {
         try {
-            return loginInfoRepository.findByUserName(username)
+            return loginInfoRepository.findFailsByUserName(username)
         }
         catch (ex: Throwable){
             throw RepositoryException("PaymentApplicationHelper.findFailLoginInfoByUserName", ex)
