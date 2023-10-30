@@ -39,6 +39,13 @@ class RegisterActivity : AppCompatActivity() {
         initialize()
     }
 
+   private fun registerSuccessCallback()
+    {
+        val user = mBinding.user
+        Toast.makeText(this, "${user?.userName} succesfully registered", Toast.LENGTH_LONG).show()
+        Intent(this, LoginActivity::class.java).apply { startActivity(this) }
+        finish()
+    }
     fun registerButtonClicked()
     {
         try {
@@ -50,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
             }
 
             if(dataService.saveUser(user))
-                Toast.makeText(this, "${user.userName} succesfully registered", Toast.LENGTH_LONG).show()
+                registerSuccessCallback()
             else
                 Toast.makeText(this, "${user.userName} can not be registered", Toast.LENGTH_LONG).show()
         }
