@@ -1,5 +1,6 @@
 package org.cso.android.app.payment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -89,6 +90,17 @@ class LoginInformationActivity : AppCompatActivity() {
         catch (ex: Throwable){
             Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun loginInformationItemClicked(pos: Int)
+    {
+        val loginInfoStatusDTO = mBinding.adapter!!.getItem(pos)
+
+        AlertDialog.Builder(this)
+            .setTitle(R.string.alertdialog_login_info_title_text)
+            .setMessage(loginInfoStatusDTO.toString())
+            .setPositiveButton(R.string.alertdialog_login_info_ok_text){a,b->}
+            .create().show()
     }
 
     fun closeButtonClicked()

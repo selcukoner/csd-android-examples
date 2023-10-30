@@ -8,6 +8,7 @@
         <import type="android.widget.ArrayAdapter"/>
         <variable name="viewModel" type="LoginInformationActivityListenerViewModel" />
         <variable name="adapter" type="ArrayAdapter&lt;LoginInfoStatusDTO&gt;" />
+
     </data>
 
     <LinearLayout
@@ -39,6 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adapter="@{adapter}"
+            android:onItemClick= "@{(p, v, pos, i ) -> viewModel.handleListViewItemSelected(pos)}"
             />
     </LinearLayout>
 </layout>

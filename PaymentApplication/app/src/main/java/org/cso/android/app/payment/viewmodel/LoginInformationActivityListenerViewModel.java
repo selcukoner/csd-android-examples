@@ -1,7 +1,6 @@
 package org.cso.android.app.payment.viewmodel;
 
 import org.cso.android.app.payment.LoginInformationActivity;
-import org.cso.android.app.payment.OperationsActivity;
 
 import java.lang.ref.WeakReference;
 
@@ -23,5 +22,10 @@ public class LoginInformationActivityListenerViewModel {
     public void handleCloseButton()
     {
         m_weakReference.get().closeButtonClicked();
+    }
+
+    public void handleListViewItemSelected(int pos)
+    {
+        m_weakReference.get().loginInformationItemClicked(pos);
     }
 }

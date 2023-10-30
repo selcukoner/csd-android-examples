@@ -1,5 +1,6 @@
 package org.cso.android.app.payment
 
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -59,5 +60,15 @@ class RegisterActivity : AppCompatActivity() {
         catch (ex: Throwable){
             Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show()
         }
+    }
+
+    fun closeButtonClicked()
+    {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.alertdialog_register_alert_text)
+            .setPositiveButton(R.string.alertdialog_register_yes_button_text){_,_ -> finish()}
+            .setNegativeButton(R.string.alertdialog_register_no_button_text){_,_ ->}
+            .setMessage(R.string.alertdialog_register_message_text)
+            .create().show()
     }
 }

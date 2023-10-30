@@ -15,4 +15,13 @@
     <string name="edittext_middle_name_hint_text">Input middle name</string>
     <string name="edittext_last_name_hint_text">Input last name</string>
     <string name="edittext_birth_date_name_hint_text">Input birth date(DD/MM/YYYY -> 1/1/1990) </string>
+
+
+    <string name="alertdialog_login_info_title_text"> Login Information </string>
+    <string name="alertdialog_login_info_ok_text"> OK </string>
+    <string name="alertdialog_register_alert_text"> Alert</string>
+    <string name="alertdialog_register_message_text"> you will lose all the information Are you sure?</string>
+    <string name="alertdialog_register_yes_button_text"> Yes</string>
+    <string name="alertdialog_register_no_button_text"> No</string>
+
 </resources>
