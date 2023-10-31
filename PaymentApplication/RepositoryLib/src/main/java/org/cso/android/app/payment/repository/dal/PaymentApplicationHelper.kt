@@ -5,6 +5,7 @@ import org.cso.android.app.payment.repository.ILoginInfoRepository
 import org.cso.android.app.payment.repository.IPaymentRepository
 import org.cso.android.app.payment.repository.IUserRepository
 import org.cso.android.app.payment.repository.entity.LoginInfo
+import org.cso.android.app.payment.repository.entity.Payment
 import org.cso.android.app.payment.repository.entity.User
 import java.io.IOException
 import javax.inject.Inject
@@ -99,6 +100,26 @@ class PaymentApplicationHelper @Inject constructor() {
         }
         catch (ex: IOException){
             throw RepositoryException("PaymentApplicationHelper.saveLoginInfo", ex)
+        }
+    }
+
+    fun findPaymentByUserName(username: String): List<Payment>
+    {
+        try {
+            return paymentRepository.findByUserName(username)
+        }
+        catch (ex: Throwable){
+            throw RepositoryException("PaymentApplicationHelper.findPaymentByUserName", ex)
+        }
+    }
+
+    fun savePayment(payment: Payment) : Payment?
+    {
+        try {
+            return paymentRepository.save(payment)
+        }
+        catch (ex: IOException){
+            throw RepositoryException("PaymentApplicationHelper.savePayment", ex)
         }
     }
 
