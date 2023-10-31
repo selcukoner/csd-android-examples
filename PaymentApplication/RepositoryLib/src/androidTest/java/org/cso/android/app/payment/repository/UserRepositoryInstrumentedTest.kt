@@ -29,8 +29,6 @@ class UserRepositoryInstrumentedTest {
     @Before
     fun setUp()
     {
-
-
         val file = File(appContext.filesDir, USER_FILE)
         /*if (file.exists() && file.length() > 0L)
             return
