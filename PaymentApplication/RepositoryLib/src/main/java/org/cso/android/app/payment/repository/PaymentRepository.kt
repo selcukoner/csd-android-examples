@@ -1,15 +1,54 @@
 package org.cso.android.app.payment.repository
 
+import android.R
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.cso.android.app.payment.repository.entity.Payment
+import org.cso.android.app.payment.repository.global.PAYMENT_FILE
+import java.io.EOFException
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 import java.util.Optional
 import javax.inject.Inject
 
 class PaymentRepository @Inject constructor(@ApplicationContext context: Context): IPaymentRepository {
+    private val mContext = context
+
+    private fun findByUserNameCallback(userName: String, fis: FileInputStream): List<Payment>
+    {
+        val payments = ArrayList<Payment>()
+        try {
+            while (true){
+                var payment = ObjectInputStream(fis).readObject() as Payment
+
+                if(payment.userName == userName )
+                    payments.add(payment)
+            }
+        }
+
+        catch (ignore: EOFException) {
+
+        }
+
+        return payments
+    }
+
+    private fun <S : Payment?> saveCallback(payment: S, fos: FileOutputStream) : S
+    {
+        ObjectOutputStream(fos).writeObject(payment)
+        return payment
+    }
+
+    override fun <S : Payment?> save(payment : S): S
+    {
+        return mContext.openFileOutput(PAYMENT_FILE, Context.MODE_APPEND).use { saveCallback(payment, it)}
+    }
+
     override fun findByUserName(userName: String): List<Payment>
     {
-        TODO("Not yet implemented")
+       return mContext.openFileInput(PAYMENT_FILE).use { findByUserNameCallback(userName, it)}
     }
 
     override fun count(): Long
@@ -37,10 +76,7 @@ class PaymentRepository @Inject constructor(@ApplicationContext context: Context
         TODO("Not yet implemented")
     }
 
-    override fun <S : Payment?> save(entity: S): S
-    {
-        TODO("Not yet implemented")
-    }
+
 
     override fun <S : Payment?> saveAll(entities: MutableIterable<S>?): MutableIterable<S>
     {
