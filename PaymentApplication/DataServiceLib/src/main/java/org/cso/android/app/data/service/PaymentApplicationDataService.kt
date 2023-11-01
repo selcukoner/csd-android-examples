@@ -4,21 +4,23 @@ import com.karandev.util.data.repository.exception.RepositoryException
 import com.karandev.util.data.service.DataServiceException
 import org.cso.android.app.data.service.dto.LoginInfoDTO
 import org.cso.android.app.data.service.dto.LoginInfoStatusDTO
+import org.cso.android.app.data.service.dto.PaymentSaveDTO
 import org.cso.android.app.data.service.dto.UserSaveDTO
 import org.cso.android.app.data.service.mapper.ILoginInfoMapper
+import org.cso.android.app.data.service.mapper.IPaymentMapper
 import org.cso.android.app.data.service.mapper.IUserMapper
-import org.cso.android.app.data.service.mapper.di.module.annotation.UserMapperInterceptor
 import org.cso.android.app.payment.repository.dal.PaymentApplicationHelper
 import javax.inject.Inject
 
 class PaymentApplicationDataService @Inject constructor(
     paymentApplicationHelper: PaymentApplicationHelper,
-    @UserMapperInterceptor userMapper:IUserMapper,
+    userMapper:IUserMapper,
+    paymentMapper: IPaymentMapper,
     loginInfoMapper: ILoginInfoMapper ){
     private val mPaymentApplicationHelper = paymentApplicationHelper
     private val mUserMapper =userMapper
     private val mLoginInfoMapper = loginInfoMapper
-
+    private val mPaymentMapper = paymentMapper
     fun checkAndSaveLoginInfo(loginInfoDTO: LoginInfoDTO): Boolean
     {
         try {
@@ -100,5 +102,22 @@ class PaymentApplicationDataService @Inject constructor(
             throw DataServiceException("PaymentApplicationDataService.saveUser", ex)
         }
         return result
+    }
+
+    fun savePayment(paymentSaveDTO: PaymentSaveDTO)
+    {
+        var result = false
+
+        try {
+            mPaymentApplicationHelper.savePayment(mPaymentMapper.toPayment(paymentSaveDTO)) != null
+            result = true
+        }
+        catch (ex: RepositoryException){
+
+            throw DataServiceException("PaymentApplicationDataService.savePayment", ex.cause)
+        }
+        catch (ex: Throwable){
+            throw DataServiceException("PaymentApplicationDataService.savePayment", ex)
+        }
     }
 }

@@ -5,7 +5,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.cso.android.app.data.service.mapper.IUserMapper
-import org.cso.android.app.data.service.mapper.di.module.annotation.UserMapperInterceptor
 import org.mapstruct.factory.Mappers
 import javax.inject.Singleton
 
@@ -14,6 +13,5 @@ import javax.inject.Singleton
 object UserMapperModule{
     @Provides
     @Singleton
-    @UserMapperInterceptor
     fun provideUserMapper() : IUserMapper = Mappers.getMapper(IUserMapper::class.java)
 }
