@@ -19,4 +19,15 @@ class MakePaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_make_payment)
     }
+
+    fun payButtonClicked()
+    {
+    }
+    fun clearButtonClicked()
+    {
+    }
+    fun closeButtonClicked()
+    {
+        finish()
+    }
 }

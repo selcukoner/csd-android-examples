@@ -6,6 +6,12 @@
     <string name="button_login_information_text">Login Information </string>
     <string name="button_success_logins_information_text">Success Logins </string>
     <string name="button_fail_logins_information_text">Fail Logins </string>
+    <string name="button_make_payment_text"> Make Payment </string>
+    <string name="button_payments_text">Payments </string>
+    <string name="button_pay_text">Pay </string>
+
+
+    <string name="button_clear_text">Clear </string>
     <string name="button_close_text">Close</string>
 
 

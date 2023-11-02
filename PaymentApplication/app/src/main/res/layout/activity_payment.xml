@@ -4,7 +4,6 @@
     <data>
         <import type="org.cso.android.app.payment.viewmodel.PaymentActivityListenerViewModel"/>
         <variable name="viewModel" type="PaymentActivityListenerViewModel" />
-
     </data>
 
 
@@ -19,13 +18,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_payment_text"
+            android:text="@string/button_make_payment_text"
             android:onClick="@{() -> viewModel.handleMakePaymentButton()}"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_login_information_text"
+            android:text="@string/button_payments_text"
             android:onClick="@{() -> viewModel.handlePaymentsButton()}"/>
 
         <Button
