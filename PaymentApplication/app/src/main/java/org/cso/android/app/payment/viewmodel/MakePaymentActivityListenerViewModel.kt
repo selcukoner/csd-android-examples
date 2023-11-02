@@ -7,7 +7,7 @@ class MakePaymentActivityListenerViewModel(activity: MakePaymentActivity) {
     private val m_weakReference = WeakReference(activity)
 
 
-    fun handlepayButton()
+    fun handlePayButton()
     {
         m_weakReference.get()?.payButtonClicked()
     }

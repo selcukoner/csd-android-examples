@@ -12,6 +12,7 @@ import org.cso.android.app.payment.data.service.PaymentApplicationDataService
 import org.cso.android.app.payment.data.service.dto.LoginInfoDTO
 import org.cso.android.app.payment.data.service.dto.LoginInfoStatusDTO
 import org.cso.android.app.payment.databinding.ActivityLoginInformationBinding
+import org.cso.android.app.payment.global.getLoginInfo
 import org.cso.android.app.payment.global.keys.LOGIN_INFO
 import org.cso.android.app.payment.viewmodel.LoginInformationActivityListenerViewModel
 import javax.inject.Inject
@@ -28,11 +29,9 @@ class LoginInformationActivity : AppCompatActivity() {
 
     private fun initLoginInfo()
     {
-        mLoginInfo =  if(android.os.Build.VERSION.SDK_INT < 33)
-            intent.getSerializableExtra(LOGIN_INFO) as LoginInfoDTO
-        else
-            intent.getSerializableExtra(LOGIN_INFO, LoginInfoDTO::class.java)!!
+        mLoginInfo = getLoginInfo(intent)
     }
+
 
     private fun initBinding()
     {
