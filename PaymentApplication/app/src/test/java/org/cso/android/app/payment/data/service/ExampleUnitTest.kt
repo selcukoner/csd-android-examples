@@ -1,4 +1,4 @@
-package org.cso.android.app.data.service
+package org.cso.android.app.payment.data.service
 
 import org.junit.Test
 

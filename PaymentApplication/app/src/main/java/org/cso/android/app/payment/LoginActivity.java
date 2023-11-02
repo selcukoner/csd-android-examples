@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.karandev.util.data.service.DataServiceException;
 
-import org.cso.android.app.data.service.PaymentApplicationDataService;
-import org.cso.android.app.data.service.dto.LoginInfoDTO;
+import org.cso.android.app.payment.data.service.PaymentApplicationDataService;
+import org.cso.android.app.payment.data.service.dto.LoginInfoDTO;
 import org.cso.android.app.payment.databinding.ActivityLoginBinding;
 import static org.cso.android.app.payment.global.keys.BundleKeyKt.LOGIN_INFO;
 import org.cso.android.app.payment.viewmodel.LoginActivityListenerViewModel;

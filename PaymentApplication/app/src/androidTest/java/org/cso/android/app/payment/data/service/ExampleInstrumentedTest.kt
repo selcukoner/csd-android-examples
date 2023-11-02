@@ -1,4 +1,4 @@
-package org.cso.android.app.data.service
+package org.cso.android.app.payment.data.service
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("org.cso.android.app.data.service.test", appContext.packageName)
+        assertEquals("org.cso.android.app.payment", appContext.packageName)
     }
 }

@@ -1,7 +1,6 @@
-package org.cso.android.app.data.service.dto
+package org.cso.android.app.payment.data.service.dto
 
 import java.io.Serializable
-import java.time.LocalDateTime
 
 data class LoginInfoStatusDTO(var username:String ="", var password:String = "",
                               var success: Boolean = true,

@@ -8,9 +8,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.karandev.util.data.service.DataServiceException
 import dagger.hilt.android.AndroidEntryPoint
-import org.cso.android.app.data.service.PaymentApplicationDataService
-import org.cso.android.app.data.service.dto.UserSaveDTO
-import org.cso.android.app.data.service.mapper.IUserMapper
+import org.cso.android.app.payment.data.service.PaymentApplicationDataService
+import org.cso.android.app.payment.data.service.dto.UserSaveDTO
+import org.cso.android.app.payment.data.service.mapper.IUserMapper
 import org.cso.android.app.payment.databinding.ActivityRegisterBinding
 import org.cso.android.app.payment.viewmodel.RegisterActivityListenerViewModel
 import java.time.LocalDate

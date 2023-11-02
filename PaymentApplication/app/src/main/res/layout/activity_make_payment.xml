@@ -3,7 +3,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="org.cso.android.app.payment.viewmodel.MakePaymentActivityListenerViewModel"/>
+        <import type="org.cso.android.app.payment.data.service.dto.PaymentSaveDTO"/>
         <variable name="viewModel" type="MakePaymentActivityListenerViewModel" />
+        <variable name="paymentInfo" type="org.cso.android.app.payment.data.service.dto.PaymentSaveDTO" />
     </data>
 
 
@@ -19,13 +21,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_payments_text"
+            android:text="@string/button_pay_text"
             android:onClick="@{() -> viewModel.handlepayButton()}"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/button_pay_text"
+            android:text="@string/button_clear_text"
             android:onClick="@{() -> viewModel.handleClearButton()}"/>
 
         <Button
@@ -33,6 +35,33 @@
             android:layout_height="wrap_content"
             android:text="@string/button_close_text"
             android:onClick="@{() -> viewModel.handleCloseButton()}"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text"
+            android:hint= "@string/edittext_description_hint_text"
+
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:hint="@string/edittext_unit_price_hint_text"
+
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:hint="@string/edittext_quantity_hint_text"
+            />
     </LinearLayout>
 </layout>
 

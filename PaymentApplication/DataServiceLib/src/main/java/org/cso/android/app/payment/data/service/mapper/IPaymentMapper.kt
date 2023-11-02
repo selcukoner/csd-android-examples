@@ -1,6 +1,6 @@
-package org.cso.android.app.data.service.mapper
+package org.cso.android.app.payment.data.service.mapper
 
-import org.cso.android.app.data.service.dto.PaymentSaveDTO
+import org.cso.android.app.payment.data.service.dto.PaymentSaveDTO
 import org.cso.android.app.payment.repository.entity.Payment
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping

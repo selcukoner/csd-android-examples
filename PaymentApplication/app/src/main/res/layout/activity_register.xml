@@ -5,11 +5,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <import type="org.cso.android.app.payment.viewmodel.RegisterActivityListenerViewModel"/>
-         <import type="org.cso.android.app.data.service.dto.UserSaveDTO"/>
+         <import type="org.cso.android.app.payment.data.service.dto.UserSaveDTO"/>
          <import type="org.cso.android.app.payment.converter.DateStringConverter"/>
 
         <variable name="viewModel" type="RegisterActivityListenerViewModel" />
-        <variable name="user" type="UserSaveDTO" />
+        <variable name="user" type="org.cso.android.app.payment.data.service.dto.UserSaveDTO" />
 
     </data>
 

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "org.cso.android.app.data.service"
+    namespace = "org.cso.android.app.payment.data.service"
     compileSdk = 33
 
     defaultConfig {

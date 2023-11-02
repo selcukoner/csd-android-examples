@@ -1,7 +1,9 @@
-package org.cso.android.app.data.service.mapper;
+package org.cso.android.app.payment.data.service.mapper;
 
-import org.cso.android.app.data.service.dto.LoginInfoDTO;
-import org.cso.android.app.data.service.dto.LoginInfoStatusDTO;
+import org.cso.android.app.payment.data.service.dto.LoginInfoDTO;
+import org.cso.android.app.payment.data.service.dto.LoginInfoStatusDTO;
+import org.cso.android.app.payment.data.service.dto.LoginInfoDTO;
+import org.cso.android.app.payment.data.service.dto.LoginInfoStatusDTO;
 import org.cso.android.app.payment.repository.entity.LoginInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

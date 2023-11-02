@@ -2,7 +2,7 @@ package org.cso.android.app.payment
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import org.cso.android.app.data.service.dto.LoginInfoDTO
+import org.cso.android.app.payment.data.service.dto.LoginInfoDTO
 import org.cso.android.app.payment.global.keys.LOGIN_INFO
 
 class MakePaymentActivity : AppCompatActivity() {

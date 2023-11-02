@@ -1,4 +1,4 @@
-package org.cso.android.app.data.service.dto
+package org.cso.android.app.payment.data.service.dto
 
 import java.io.Serializable
 

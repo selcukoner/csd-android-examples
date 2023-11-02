@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
-import org.cso.android.app.data.service.dto.LoginInfoDTO
+import org.cso.android.app.payment.data.service.dto.LoginInfoDTO
 import org.cso.android.app.payment.databinding.ActivityOperationsBinding
 import org.cso.android.app.payment.global.keys.LOGIN_INFO
 import org.cso.android.app.payment.viewmodel.OperationsActivityListenerViewModel

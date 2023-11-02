@@ -8,9 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.karandev.util.data.service.DataServiceException
 import dagger.hilt.android.AndroidEntryPoint
-import org.cso.android.app.data.service.PaymentApplicationDataService
-import org.cso.android.app.data.service.dto.LoginInfoDTO
-import org.cso.android.app.data.service.dto.LoginInfoStatusDTO
+import org.cso.android.app.payment.data.service.PaymentApplicationDataService
+import org.cso.android.app.payment.data.service.dto.LoginInfoDTO
+import org.cso.android.app.payment.data.service.dto.LoginInfoStatusDTO
 import org.cso.android.app.payment.databinding.ActivityLoginInformationBinding
 import org.cso.android.app.payment.global.keys.LOGIN_INFO
 import org.cso.android.app.payment.viewmodel.LoginInformationActivityListenerViewModel

@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
-import org.cso.android.app.data.service.PaymentApplicationDataService
-import org.cso.android.app.data.service.dto.UserSaveDTO
-import org.cso.android.app.data.service.mapper.IUserMapper
+import org.cso.android.app.payment.data.service.PaymentApplicationDataService
+import org.cso.android.app.payment.data.service.dto.UserSaveDTO
+import org.cso.android.app.payment.data.service.mapper.IUserMapper
 import org.cso.android.app.payment.databinding.ActivityMainBinding
 import org.cso.android.app.payment.viewmodel.MainActivityListenerViewModel
 import java.time.LocalDate

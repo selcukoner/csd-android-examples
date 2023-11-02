@@ -21,6 +21,9 @@
     <string name="edittext_middle_name_hint_text">Input middle name</string>
     <string name="edittext_last_name_hint_text">Input last name</string>
     <string name="edittext_birth_date_name_hint_text">Input birth date(DD/MM/YYYY -> 1/1/1990) </string>
+    <string name="edittext_description_hint_text">Input Description</string>
+    <string name="edittext_unit_price_hint_text">Input Unit Price</string>
+    <string name="edittext_quantity_hint_text">Input Quantit</string>
 
 
     <string name="alertdialog_login_info_title_text"> Login Information </string>
