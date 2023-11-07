@@ -2,6 +2,8 @@ package org.cso.android.app.displaydatetime
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import org.cso.android.app.displaydatetime.databinding.ActivityMainBinding
 import org.csystem.android.util.datetime.di.module.formatter.annotation.LocalDateTimeFormatterInterceptor
@@ -18,13 +20,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun createTimerTask() = object : TimerTask(){
         override fun run() {
-            mBinding.dateTime = mFormatter.format(LocalDateTime.now())
+            mBinding.dateTime = formatter.format(LocalDateTime.now())
         }
     }
 
     @Inject
     @LocalDateTimeFormatterInterceptor
-    lateinit var mFormatter : DateTimeFormatter
+    lateinit var formatter : DateTimeFormatter
 
     private fun initBinding()
     {
@@ -34,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     private fun initialize()
     {
         initBinding()
-        mTimer = Timer()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,12 +44,30 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        try{
 
-        mFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm:ss")
-        mTimer.scheduleAtFixedRate(createTimerTask(),0, 1000)
+            super.onStart()
+            mTimer = Timer()
+            formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm:ss")
+            mTimer.scheduleAtFixedRate(createTimerTask(),0, 1000)
+        }
+        catch (ex: Throwable){
+            Log.d("on-start", ex.message!!)
+            Toast.makeText(this, "Problem occurred on start", Toast.LENGTH_LONG).show()
+        }
+    }
 
+    override fun onStop() {
+        try {
+            mTimer.cancel()
+            super.onStop()
+
+        }
+        catch (ex: Throwable){
+            Log.d("on-stop  ", ex.message!!)
+            Toast.makeText(this, "Problem occurred on stop", Toast.LENGTH_LONG).show()
+        }
     }
 
 
