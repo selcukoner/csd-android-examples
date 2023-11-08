@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.cso.android.app.displaydatetime.databinding.ActivityMainBinding
 import org.csystem.android.util.datetime.di.module.formatter.annotation.LocalDateTimeFormatterInterceptor
 import org.csystem.android.util.datetime.di.module.formatter.annotation.LocalTimeFormatterInterceptor
@@ -16,37 +17,13 @@ import java.util.TimerTask
 import javax.inject.Inject
 import kotlin.concurrent.thread
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mTimerDateTime: Timer
+    private lateinit var mChronoTimer: Timer
     private lateinit var mClockThread : Thread
-
-    private fun createDateTimeTimerTask() = object : TimerTask(){
-        override fun run() {
-            mBinding.dateTime = dateTimeFormatter.format(LocalDateTime.now())
-        }
-    }
-
-    private fun clockThreadCallback()
-    {
-        timeFormatter = DateTimeFormatter.ofPattern("kk:mm:ss")
-        while (true){ // usage of Timer is better
-            mBinding.time = timeFormatter.format(LocalTime.now())
-            Thread.sleep(1000)
-        }
-    }
-    private fun startClock()
-    {
-     mClockThread = thread { clockThreadCallback() }
-    }
-
-    private fun scheduleDateTimeTimer()
-    {
-        mTimerDateTime = Timer()
-        dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy kk:mm:ss")
-        mTimerDateTime.scheduleAtFixedRate(createDateTimeTimerTask(),0, 1000)
-    }
 
     @Inject
     @LocalDateTimeFormatterInterceptor
@@ -54,6 +31,56 @@ class MainActivity : AppCompatActivity() {
     @Inject
     @LocalTimeFormatterInterceptor
     lateinit var timeFormatter : DateTimeFormatter
+
+    private fun createChronoTimerTask() = object : TimerTask(){
+        var seconds = 0L
+        override fun run() {
+            displayChronoDuration(seconds++)
+        }
+    }
+
+    private fun createDateTimeTimerTask() = object : TimerTask(){
+        override fun run() {
+            mBinding.dateTime = dateTimeFormatter.format(LocalDateTime.now())
+        }
+    }
+    private fun clockThreadCallback()
+    {
+        while (true){ // usage of Timer is better
+            mBinding.time = timeFormatter.format(LocalTime.now())
+            Thread.sleep(1000)
+        }
+    }
+
+    private fun startClock()
+    {
+     mClockThread = thread { clockThreadCallback() }
+    }
+
+    private fun scheduleChronoTimer()
+    {
+        mChronoTimer = Timer()
+        mChronoTimer.scheduleAtFixedRate(createChronoTimerTask(),0, 1000)
+    }
+
+    private fun startAutoDisplayChronometer()
+    {
+        mBinding.mainActivityChronometerAutoDisplay.start()
+    }
+
+    private fun displayChronoDuration(seconds: Long)
+    {
+        val hour = seconds / 60 / 60
+        val minute = seconds /60 %60
+        val second = seconds %60
+
+        mBinding.chronometer = "%02d:%02d:%02d".format(hour,minute,second)
+    }
+    private fun scheduleDateTimeTimer()
+    {
+        mTimerDateTime = Timer()
+        mTimerDateTime.scheduleAtFixedRate(createDateTimeTimerTask(),0, 1000)
+    }
 
     private fun initBinding()
     {
@@ -76,7 +103,9 @@ class MainActivity : AppCompatActivity() {
 
             super.onStart()
             scheduleDateTimeTimer()
+            scheduleChronoTimer()
             startClock()
+            startAutoDisplayChronometer()
         }
         catch (ex: Throwable){
             Log.d("on-start", ex.message!!)
@@ -88,6 +117,8 @@ class MainActivity : AppCompatActivity() {
         try {
             mTimerDateTime.cancel()
             mClockThread.interrupt()
+            mChronoTimer.cancel()
+            mBinding.mainActivityChronometerAutoDisplay.stop()
             super.onStop()
 
         }
