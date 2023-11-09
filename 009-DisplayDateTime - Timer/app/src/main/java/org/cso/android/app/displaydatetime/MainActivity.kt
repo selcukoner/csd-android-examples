@@ -46,9 +46,14 @@ class MainActivity : AppCompatActivity() {
     }
     private fun clockThreadCallback()
     {
-        while (true){ // usage of Timer is better
-            mBinding.time = timeFormatter.format(LocalTime.now())
-            Thread.sleep(1000)
+        try {
+            while (true){ // usage of Timer is better
+                mBinding.time = timeFormatter.format(LocalTime.now())
+                Thread.sleep(1000)
+            }
+        }
+        catch (_ : InterruptedException){
+            runOnUiThread{Toast.makeText(this, "Time to finish", Toast.LENGTH_LONG).show()}
         }
     }
 
