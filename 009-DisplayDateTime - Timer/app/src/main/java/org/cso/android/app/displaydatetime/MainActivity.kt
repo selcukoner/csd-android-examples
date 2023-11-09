@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.cso.android.app.displaydatetime.databinding.ActivityMainBinding
+import org.cso.android.app.displaydatetime.viewmodels.MainActivityListenersViewModel
 import org.csystem.android.util.datetime.di.module.formatter.annotation.LocalDateTimeFormatterInterceptor
 import org.csystem.android.util.datetime.di.module.formatter.annotation.LocalTimeFormatterInterceptor
 import java.time.LocalDateTime
@@ -25,12 +26,46 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mChronoTimer: Timer
     private lateinit var mClockThread : Thread
 
+    private lateinit var mStoppableChronoTimer: Timer
+    private var stoppableChronoSeconds = 0L
+
     @Inject
     @LocalDateTimeFormatterInterceptor
     lateinit var dateTimeFormatter : DateTimeFormatter
     @Inject
     @LocalTimeFormatterInterceptor
     lateinit var timeFormatter : DateTimeFormatter
+
+
+
+    fun toggleButtonClickedCallback(checked: Boolean)
+    {
+        if (checked){
+            mStoppableChronoTimer.cancel()
+        }else{
+            scheduleStoppableChronoTimer()
+        }
+    }
+
+    private fun displayStoppableChronoDuration(seconds: Long)
+    {
+        val hour = seconds / 60 / 60
+        val minute = seconds /60 %60
+        val second = seconds %60
+
+        mBinding.stoppableChronometer = "%02d:%02d:%02d".format(hour,minute,second)
+    }
+    private fun createStoppableChronometerTimerTask(): TimerTask = object : TimerTask(){
+            override fun run() {
+                displayStoppableChronoDuration(stoppableChronoSeconds++)
+            }
+        }
+
+    private fun scheduleStoppableChronoTimer()
+    {
+        mStoppableChronoTimer = Timer()
+        mStoppableChronoTimer.scheduleAtFixedRate(createStoppableChronometerTimerTask(),0, 1000)
+    }
 
     private fun createChronoTimerTask() = object : TimerTask(){
         var seconds = 0L
@@ -87,6 +122,11 @@ class MainActivity : AppCompatActivity() {
         mTimerDateTime.scheduleAtFixedRate(createDateTimeTimerTask(),0, 1000)
     }
 
+    private fun initViewModel()
+    {
+        mBinding.viewmodel = MainActivityListenersViewModel(this)
+    }
+
     private fun initBinding()
     {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -95,6 +135,7 @@ class MainActivity : AppCompatActivity() {
     private fun initialize()
     {
         initBinding()
+        initViewModel()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,6 +150,7 @@ class MainActivity : AppCompatActivity() {
             super.onStart()
             scheduleDateTimeTimer()
             scheduleChronoTimer()
+            scheduleStoppableChronoTimer()
             startClock()
             startAutoDisplayChronometer()
         }
