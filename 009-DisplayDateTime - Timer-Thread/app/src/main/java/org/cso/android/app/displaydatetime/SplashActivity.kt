@@ -14,7 +14,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun initCountDownTimer()
     {
-        object : CountDownTimer(10000, 1000){
+        object : CountDownTimer(5000, 1000){
             override fun onTick(remainingMillis: Long) { // gives remaining time
                 mBinding.counter  = (remainingMillis/1000L).toString()
             }

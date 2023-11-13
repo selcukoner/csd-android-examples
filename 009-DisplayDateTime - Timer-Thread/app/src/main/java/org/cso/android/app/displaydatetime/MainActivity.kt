@@ -37,8 +37,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var timeFormatter : DateTimeFormatter
 
 
-
-    fun toggleButtonClickedCallback(checked: Boolean)
+    fun toggleButtonClicked(checked: Boolean)
     {
         if (checked){
             mStoppableChronoTimer.cancel()
@@ -67,6 +66,14 @@ class MainActivity : AppCompatActivity() {
         mStoppableChronoTimer.scheduleAtFixedRate(createStoppableChronometerTimerTask(),0, 1000)
     }
 
+    private fun displayChronoDuration(seconds: Long)
+    {
+        val hour = seconds / 60 / 60
+        val minute = seconds /60 %60
+        val second = seconds %60
+
+        mBinding.chronometer = "%02d:%02d:%02d".format(hour,minute,second)
+    }
     private fun createChronoTimerTask() = object : TimerTask(){
         var seconds = 0L
         override fun run() {
@@ -74,11 +81,24 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun scheduleChronoTimer()
+    {
+        mChronoTimer = Timer()
+        mChronoTimer.scheduleAtFixedRate(createChronoTimerTask(),0, 1000)
+    }
+
     private fun createDateTimeTimerTask() = object : TimerTask(){
         override fun run() {
             mBinding.dateTime = dateTimeFormatter.format(LocalDateTime.now())
         }
     }
+
+    private fun scheduleDateTimeTimer()
+    {
+        mTimerDateTime = Timer()
+        mTimerDateTime.scheduleAtFixedRate(createDateTimeTimerTask(),0, 1000)
+    }
+
     private fun clockThreadCallback()
     {
         try {
@@ -88,38 +108,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
         catch (_ : InterruptedException){
-            runOnUiThread{Toast.makeText(this, "Time to finish", Toast.LENGTH_LONG).show()}
+            runOnUiThread{Toast.makeText(this, "Time to finish for clock thread", Toast.LENGTH_LONG).show()}
         }
     }
 
+    //----- Clock Using Thread--------
     private fun startClock()
     {
      mClockThread = thread { clockThreadCallback() }
     }
 
-    private fun scheduleChronoTimer()
-    {
-        mChronoTimer = Timer()
-        mChronoTimer.scheduleAtFixedRate(createChronoTimerTask(),0, 1000)
-    }
-
     private fun startAutoDisplayChronometer()
     {
         mBinding.mainActivityChronometerAutoDisplay.start()
-    }
-
-    private fun displayChronoDuration(seconds: Long)
-    {
-        val hour = seconds / 60 / 60
-        val minute = seconds /60 %60
-        val second = seconds %60
-
-        mBinding.chronometer = "%02d:%02d:%02d".format(hour,minute,second)
-    }
-    private fun scheduleDateTimeTimer()
-    {
-        mTimerDateTime = Timer()
-        mTimerDateTime.scheduleAtFixedRate(createDateTimeTimerTask(),0, 1000)
     }
 
     private fun initViewModel()
@@ -174,5 +175,4 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Problem occurred on stop", Toast.LENGTH_LONG).show()
         }
     }
-
 }

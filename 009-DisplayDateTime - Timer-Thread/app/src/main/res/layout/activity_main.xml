@@ -43,20 +43,28 @@
             android:layout_height="wrap_content"
             android:text="@{time}" />
 
-        <ToggleButton
-            android:id="@+id/toggleButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textOn="Start"
-            android:textOff="Stop"
-            android:checked="false"
-            android:onCheckedChanged="@{(_,checked) -> viewmodel.handleToggleButton(checked)}"
-            android:text="ToggleButton" />
 
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{stoppableChronometer}" />
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textOn="Start"
+                android:textOff="Stop"
+                android:checked="false"
+                android:onCheckedChanged="@{(_,checked) -> viewmodel.handleToggleButton(checked)}"
+                android:text="ToggleButton" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{stoppableChronometer}" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

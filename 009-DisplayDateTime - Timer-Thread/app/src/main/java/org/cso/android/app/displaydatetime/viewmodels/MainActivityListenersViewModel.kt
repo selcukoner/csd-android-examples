@@ -6,5 +6,6 @@ import java.lang.ref.WeakReference
 class MainActivityListenersViewModel(activity: MainActivity){
     private val mWeakReference= WeakReference(activity)
 
-    fun handleToggleButton(checked: Boolean) = mWeakReference.get()?.toggleButtonClickedCallback(checked)
+    fun handleToggleButton(checked: Boolean) = mWeakReference.get()?.toggleButtonClicked(checked)
+
 }
