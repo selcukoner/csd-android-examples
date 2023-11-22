@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="com.cso.android.app.generator.random.viewmodel.listeners.MainActivityListenersViewModel"/>
+        <import type="com.cso.android.app.generator.random.viewmodel.data.GenerateInfo"/>
+        <import type="com.cso.android.app.generator.random.viewmodel.converter.CountStringConverter"/>
+        <import type="com.cso.android.app.generator.random.viewmodel.converter.MinimumStringConverter"/>
+        <import type="com.cso.android.app.generator.random.viewmodel.converter.MaximumStringConverter"/>
+        <import type="com.cso.android.app.generator.random.viewmodel.converter.PeriodStringConverter"/>
+        <import type="android.widget.ArrayAdapter"/>
+
+
+        <variable name="viewModel" type="MainActivityListenersViewModel" />
+        <variable name="generateInfo" type="GenerateInfo" />
+        <variable name="adapter" type="ArrayAdapter&lt;String&gt;" />
+        <variable name="enabled" type="boolean" />
+
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="@string/edittext_count_hint"
+            android:text="@={CountStringConverter.INSTANCE.toStr(generateInfo.count)}"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@={MinimumStringConverter.INSTANCE.toStr(generateInfo.minimum)}"
+            android:hint="@string/edittext_minimum_hint"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@={MaximumStringConverter.INSTANCE.toStr(generateInfo.maximum)}"
+            android:hint="@string/edittext_maximum_hint"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:text="@={PeriodStringConverter.INSTANCE.toStr(generateInfo.period)}"
+            android:hint="@string/edittext_period_hint"/>
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/mainActivityRadioButtonAddPeriodically"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/radiobutton_add_periodically" />
+
+            <RadioButton
+                android:id="@+id/mainActivityRadioButtonAddLast"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/radiobutton_add_last" />
+
+        </RadioGroup>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.handleGenerateButton()}"
+            android:enabled="@{enabled}"
+            android:text="@string/button_generate_text" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="@{enabled}"
+            android:onClick="@{() -> viewModel.handleSaveButton()}"
+            android:text="@string/button_save_text" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:enabled="@{enabled}"
+            android:onClick="@{() -> viewModel.handleClearButton()}"
+            android:text="@string/button_clear_text" />
+
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adapter="@{adapter}"/>
+
+    </LinearLayout>
+</layout>
+
+
