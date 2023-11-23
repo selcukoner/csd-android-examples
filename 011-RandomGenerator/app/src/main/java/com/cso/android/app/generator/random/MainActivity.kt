@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var mBinding : ActivityMainBinding
     private lateinit var mScheduledFuture: ScheduledFuture<*>
 
-
     @Inject
     lateinit var executorService : ScheduledExecutorService // thread pool
 
@@ -30,7 +29,8 @@ class MainActivity : AppCompatActivity() {
     private fun waitScheduler()
     {   // first thread waits the second thread(timer)
         try {
-            mScheduledFuture.get(mBinding.generateInfo!!.period* mBinding.generateInfo!!.count, TimeUnit.SECONDS)
+            mScheduledFuture.get(mBinding.generateInfo!!.period * mBinding.generateInfo!!.count* 1000 -100 , TimeUnit.MILLISECONDS)
+
         }
         catch (_: TimeoutException){
             mScheduledFuture.cancel(false)
@@ -41,9 +41,8 @@ class MainActivity : AppCompatActivity() {
     {
         try {
             mBinding.enabled = false
-            //second thread in the thread pool (timer)
-            mScheduledFuture = executorService.scheduleAtFixedRate({ schedulerCallback() }, 0L, mBinding.generateInfo!!.period, TimeUnit.SECONDS)
-
+            // create second thread in the thread pool (timer)
+            mScheduledFuture = executorService.scheduleAtFixedRate({ schedulerCallback()  }, 0L, mBinding.generateInfo!!.period, TimeUnit.SECONDS)
         }
         catch (ex: Throwable){
             runOnUiThread{Toast.makeText(this, "Problem Occured in scheduler track thread ${ex.message}", Toast.LENGTH_LONG).show()}
@@ -53,8 +52,6 @@ class MainActivity : AppCompatActivity() {
             waitScheduler()
             mBinding.enabled = true
         }
-
-
     }
 
     private fun schedulerCallback()
