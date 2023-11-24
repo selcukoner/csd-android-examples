@@ -9,4 +9,6 @@ class MainActivityListenersViewModel (activity: MainActivity ) {
     fun handleGenerateButton() = mWeakReference.get()?.generateButtonClicked()
     fun handleSaveButton() = mWeakReference.get()?.saveButtonClicked()
     fun handleClearButton() = mWeakReference.get()?.clearButtonClicked()
+
+    fun handleRadioGroup(checkedId: Int) = mWeakReference.get()?.radioButtonChecked(checkedId)
 }

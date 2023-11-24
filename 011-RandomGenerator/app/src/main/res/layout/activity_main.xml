@@ -13,11 +13,11 @@
         <import type="com.cso.android.app.generator.random.viewmodel.converter.PeriodStringConverter"/>
         <import type="android.widget.ArrayAdapter"/>
 
-
         <variable name="viewModel" type="MainActivityListenersViewModel" />
         <variable name="generateInfo" type="GenerateInfo" />
         <variable name="adapter" type="ArrayAdapter&lt;String&gt;" />
         <variable name="enabled" type="boolean" />
+        <variable name="checkedRadioButton" type="int" />
 
 
     </data>
@@ -62,14 +62,18 @@
 
 
         <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:checkedButton="@={checkedRadioButton}"
+            android:onCheckedChanged="@{(group, checkedId) -> viewModel.handleRadioGroup(checkedId)}">
 
             <RadioButton
                 android:id="@+id/mainActivityRadioButtonAddPeriodically"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:text="@string/radiobutton_add_periodically" />
 
             <RadioButton
@@ -86,7 +90,6 @@
             android:onClick="@{() -> viewModel.handleGenerateButton()}"
             android:enabled="@{enabled}"
             android:text="@string/button_generate_text" />
-
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -99,7 +102,6 @@
             android:enabled="@{enabled}"
             android:onClick="@{() -> viewModel.handleClearButton()}"
             android:text="@string/button_clear_text" />
-
 
         <ListView
             android:layout_width="match_parent"

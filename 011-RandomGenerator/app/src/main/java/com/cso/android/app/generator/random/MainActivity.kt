@@ -2,14 +2,22 @@ package com.cso.android.app.generator.random
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.cso.android.app.generator.random.databinding.ActivityMainBinding
+import com.cso.android.app.generator.random.global.what.WHAT_SCHEDULER_CALLBACK_EXCEPTION
+import com.cso.android.app.generator.random.global.what.WHAT_SCHEDULER_TRACK_CALLBACK_EXCEPTION
+import com.cso.android.app.generator.random.global.what.WHAT_TEXT_ADAPTER_ADD
+import com.cso.android.app.generator.random.global.what.WHAT_WAIT_SCHEDULER_TIMEOUT
 import com.cso.android.app.generator.random.string.generateRandomTextEN
 import com.cso.android.app.generator.random.viewmodel.data.GenerateInfo
 import com.cso.android.app.generator.random.viewmodel.listeners.MainActivityListenersViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.ref.WeakReference
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
@@ -21,19 +29,55 @@ import kotlin.random.Random
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding : ActivityMainBinding
     private lateinit var mScheduledFuture: ScheduledFuture<*>
+    private lateinit var mHandler: Handler
 
     @Inject
     lateinit var executorService : ScheduledExecutorService // thread pool
 
 
+    private class SchedulerHandler(activity: MainActivity) : Handler(Looper.myLooper()!!){
+        private val mWeakReference = WeakReference(activity)
+
+        private fun handleTextAdapterAdd(text:String)
+        {
+            mWeakReference.get()!!.mBinding.adapter!!.add(text)
+        }
+
+        private fun handleSchedulerTrackCallbackException(str:String)
+        {
+            Toast.makeText(mWeakReference.get(), "Problem Occurred in scheduler track thread ${str}", Toast.LENGTH_LONG).show()
+        }
+
+        private fun handleSchedulerCallbackException(str:String)
+        {
+            Toast.makeText(mWeakReference.get(), "Problem Occurred in scheduler thread ${str}", Toast.LENGTH_LONG).show()
+        }
+
+        private fun handleSchedulerTimeout()
+        {
+            Toast.makeText(mWeakReference.get(), "Texts generated!...", Toast.LENGTH_LONG).show()
+        }
+        override fun handleMessage(msg: Message)
+        {
+            when(msg.what){
+                WHAT_TEXT_ADAPTER_ADD -> handleTextAdapterAdd(msg.obj as String)
+                WHAT_SCHEDULER_TRACK_CALLBACK_EXCEPTION ->  handleSchedulerTrackCallbackException(msg.obj as String)
+                WHAT_SCHEDULER_CALLBACK_EXCEPTION ->  handleSchedulerCallbackException(msg.obj as String)
+                WHAT_WAIT_SCHEDULER_TIMEOUT ->  handleSchedulerTimeout()
+            }
+        }
+    }
+
+
     private fun waitScheduler()
     {   // first thread waits the second thread(timer)
         try {
-            mScheduledFuture.get(mBinding.generateInfo!!.period * mBinding.generateInfo!!.count* 1000 -100 , TimeUnit.MILLISECONDS)
+            mScheduledFuture.get(mBinding.generateInfo!!.period * mBinding.generateInfo!!.count* 1000 -10  , TimeUnit.MILLISECONDS)
 
         }
         catch (_: TimeoutException){
             mScheduledFuture.cancel(false)
+            mHandler.sendEmptyMessage(WHAT_WAIT_SCHEDULER_TIMEOUT)
         }
     }
 
@@ -45,8 +89,7 @@ class MainActivity : AppCompatActivity() {
             mScheduledFuture = executorService.scheduleAtFixedRate({ schedulerCallback()  }, 0L, mBinding.generateInfo!!.period, TimeUnit.SECONDS)
         }
         catch (ex: Throwable){
-            runOnUiThread{Toast.makeText(this, "Problem Occured in scheduler track thread ${ex.message}", Toast.LENGTH_LONG).show()}
-
+             mHandler.sendMessage(mHandler.obtainMessage(WHAT_SCHEDULER_TRACK_CALLBACK_EXCEPTION, ex.message ))
         }
         finally {
             waitScheduler()
@@ -56,27 +99,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun schedulerCallback()
     {
-        //as adapter is also view
-        runOnUiThread {
-            try {
-                mBinding.adapter!!.add(
-                    generateRandomTextEN(
-                        Random.nextInt(
-                            mBinding.generateInfo!!.minimum,
-                            mBinding.generateInfo!!.maximum + 1
-                        )
-                    )
-                )
+        try {
+            val count = Random.nextInt(mBinding.generateInfo!!.minimum, mBinding.generateInfo!!.maximum + 1)
+            val text = generateRandomTextEN(count)
 
-            } catch (ex: Throwable) {
-                runOnUiThread {
-                    Toast.makeText(
-                        this,
-                        "Problem Occured in scheduler ${ex.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
+            mHandler.sendMessage(Message.obtain(mHandler, WHAT_TEXT_ADAPTER_ADD, text))
+        } catch (ex: Throwable) {
+            mHandler.sendMessage(mHandler.obtainMessage(WHAT_SCHEDULER_CALLBACK_EXCEPTION, ex.message ))
         }
     }
 
@@ -92,6 +121,7 @@ class MainActivity : AppCompatActivity() {
     {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         initViewModels()
+        mHandler = SchedulerHandler(this)
     }
 
     private fun initialize()
@@ -115,5 +145,16 @@ class MainActivity : AppCompatActivity() {
     fun clearButtonClicked()
     {
         mBinding.adapter!!.clear()
+    }
+
+    fun radioButtonChecked(checkedId: Int)
+    {
+        //Toast.makeText(this, "checked Id: $checkedId checkedButton:${mBinding.checkedButton}",Toast.LENGTH_LONG).show()
+
+        if (checkedId == mBinding.mainActivityRadioButtonAddPeriodically.id)
+      //      Toast.makeText(this,"Periodic", Toast.LENGTH_SHORT).show()
+        else{
+        //    Toast.makeText(this,"Last", Toast.LENGTH_SHORT).show()
+        }
     }
 }
