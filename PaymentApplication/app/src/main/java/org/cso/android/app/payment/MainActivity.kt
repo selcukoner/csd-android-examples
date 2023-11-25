@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     fun loginButtonClicked()
     {
         Intent(this,LoginActivity::class.java).apply { startActivity(this)}
+
     }
 
 }
