@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     fun registerButtonClicked()
     {
         Intent(this,RegisterActivity::class.java).apply { startActivity(this)}
+
     }
     fun loginButtonClicked()
     {

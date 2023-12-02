@@ -3,6 +3,7 @@ package org.cso.android.app.payment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.karandev.util.data.service.DataServiceException
@@ -14,6 +15,7 @@ import org.cso.android.app.payment.databinding.ActivityMakePaymentBinding
 import org.cso.android.app.payment.global.getLoginInfo
 import org.cso.android.app.payment.global.keys.LOGIN_INFO
 import org.cso.android.app.payment.viewmodel.MakePaymentActivityListenerViewModel
+import java.util.concurrent.ScheduledExecutorService
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,6 +25,27 @@ class MakePaymentActivity : AppCompatActivity() {
     private lateinit var mBinding : ActivityMakePaymentBinding
     @Inject
     lateinit var paymentApplicationDataService: PaymentApplicationDataService
+
+    @Inject
+    lateinit var threadPool: ScheduledExecutorService
+
+    fun payButtonClickedCallback()
+    {
+        //check data for validation
+        try {
+            paymentApplicationDataService.savePayment(mBinding.paymentInfo!!)
+            runOnUiThread { Toast.makeText(this, "Paid successfully", Toast.LENGTH_SHORT).show() }
+        }
+        catch (ex : DataServiceException){
+            runOnUiThread { Toast.makeText(this, "Data problem  occurred", Toast.LENGTH_SHORT).show() }
+            Log.d("data_service", ex.message!!)
+        }
+        catch (ex : Throwable){
+            runOnUiThread { Toast.makeText(this, "Problem occurred", Toast.LENGTH_SHORT).show() }
+            Log.d("any_service", ex.message!!)
+        }
+    }
+
 
     private fun initLoginInfo()
     {
@@ -50,19 +73,17 @@ class MakePaymentActivity : AppCompatActivity() {
 
     fun payButtonClicked()
     {
-        //check data for validation
-        try {
-            paymentApplicationDataService.savePayment(mBinding.paymentInfo!!)
-        }
-        catch (ex : DataServiceException){
-            Log.d("data_service", ex.message!!)
-        }
-        catch (ex : Throwable){
-            Log.d("any_service", ex.message!!)
-        }
+        threadPool.execute {payButtonClickedCallback() } // threadPool.execute(::payButtonClickedCallback )
+
     }
     fun clearButtonClicked()
     {
+        for (index in 0..<mBinding.makePaymentActivityLinearLayoutMain.childCount){
+            val view = mBinding.makePaymentActivityLinearLayoutMain.getChildAt(index)
+
+            if (view is EditText)
+                view.setText("")
+        }
     }
     fun closeButtonClicked()
     {

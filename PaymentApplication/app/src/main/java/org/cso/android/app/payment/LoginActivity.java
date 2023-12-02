@@ -15,6 +15,8 @@ import org.cso.android.app.payment.databinding.ActivityLoginBinding;
 import static org.cso.android.app.payment.global.keys.BundleKeyKt.LOGIN_INFO;
 import org.cso.android.app.payment.viewmodel.LoginActivityListenerViewModel;
 
+import java.util.concurrent.ScheduledExecutorService;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -26,6 +28,37 @@ public class LoginActivity extends AppCompatActivity {
     @Inject
     PaymentApplicationDataService dataService;
 
+    @Inject
+    ScheduledExecutorService threadPool;
+
+
+    private void saveLoginInfoUIThreadCallback(LoginInfoDTO loginInfo)
+    {
+        Toast.makeText(this, "Access granted", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, OperationsActivity.class).putExtra(LOGIN_INFO, loginInfo));
+
+    }
+
+    private void loginButtonClickedCallback()
+    {
+        try {
+            var loginInfo = m_binding.getLoginInfo();
+
+            if(dataService.checkAndSaveLoginInfo(loginInfo)){
+                runOnUiThread(() -> { saveLoginInfoUIThreadCallback(loginInfo);});
+            }else{
+                Toast.makeText(this, "Access denied", Toast.LENGTH_LONG).show();
+            }
+
+        }
+        catch (DataServiceException ex){
+            runOnUiThread(() -> Toast.makeText(this, "Data Problem:" + ex.getMessage(), Toast.LENGTH_LONG).show());
+
+        }
+        catch (Throwable ignore){
+            runOnUiThread(() -> Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show());
+        }
+    }
 
     private void initBinding()
     {
@@ -47,23 +80,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginButtonClicked()
     {
-        try {
-            var loginInfo = m_binding.getLoginInfo();
-
-            if(dataService.checkAndSaveLoginInfo(loginInfo)){
-                Toast.makeText(this, "Access granted", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(this, OperationsActivity.class).putExtra(LOGIN_INFO, loginInfo));
-            }else{
-                Toast.makeText(this, "Access denied", Toast.LENGTH_LONG).show();
-            }
-
-        }
-        catch (DataServiceException ex){
-        Toast.makeText(this, "Data Problem:" + ex.getMessage(), Toast.LENGTH_LONG).show();
-        }
-        catch (Throwable ignore){
-        Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show();
-        }
+        threadPool.execute(() -> loginButtonClickedCallback()); // threadPool.execute(this::loginButtonClickedCallback);
     }
 
 }
