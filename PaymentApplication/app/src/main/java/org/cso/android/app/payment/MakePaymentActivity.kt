@@ -71,11 +71,8 @@ class MakePaymentActivity : AppCompatActivity() {
 
     }
 
-    fun payButtonClicked()
-    {
-        threadPool.execute {payButtonClickedCallback() } // threadPool.execute(::payButtonClickedCallback )
+    fun payButtonClicked() = threadPool.execute {payButtonClickedCallback() } // threadPool.execute(::payButtonClickedCallback )
 
-    }
     fun clearButtonClicked()
     {
         for (index in 0..<mBinding.makePaymentActivityLinearLayoutMain.childCount){

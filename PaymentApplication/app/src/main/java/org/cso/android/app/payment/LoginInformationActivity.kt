@@ -15,6 +15,7 @@ import org.cso.android.app.payment.databinding.ActivityLoginInformationBinding
 import org.cso.android.app.payment.global.getLoginInfo
 import org.cso.android.app.payment.global.keys.LOGIN_INFO
 import org.cso.android.app.payment.viewmodel.LoginInformationActivityListenerViewModel
+import java.util.concurrent.ScheduledExecutorService
 import javax.inject.Inject
 
 
@@ -26,6 +27,48 @@ class LoginInformationActivity : AppCompatActivity() {
 
     @Inject
     lateinit var dataService : PaymentApplicationDataService
+
+    @Inject
+    lateinit var threadPool : ScheduledExecutorService
+
+    private fun successLoginsButtonClickedCallback()
+    {
+        try {
+            runOnUiThread{mBinding.adapter!!.clear()}
+
+            dataService.findSuccessLoginInfoByUserName(mLoginInfo.username)
+                .forEach { runOnUiThread {mBinding!!.adapter!!.add(it)}}
+
+        }
+        catch (ex: DataServiceException){
+            runOnUiThread { Toast.makeText(this, "Data Problem:${ex.message}", Toast.LENGTH_LONG).show() }
+        }
+        catch (ex: Throwable){
+            runOnUiThread { Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show() }
+        }
+    }
+
+    private fun  failLoginsButtonClickedCallback()
+    {
+        try {
+           mBinding.adapter!!.clear()
+
+            val logins = dataService.findFailLoginInfoByUserName(mLoginInfo.username)
+
+            if(logins.isNotEmpty())
+                runOnUiThread{logins.forEach { mBinding!!.adapter!!.add(it) }}
+            else
+                runOnUiThread { Toast.makeText(this, "No fail login", Toast.LENGTH_LONG).show() }
+
+        }
+        catch (ex: DataServiceException){
+            runOnUiThread {Toast.makeText(this, "Data Problem:${ex.message}", Toast.LENGTH_LONG).show()}
+        }
+        catch (ex: Throwable){
+            runOnUiThread { Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show() }
+        }
+    }
+
 
     private fun initLoginInfo()
     {
@@ -51,45 +94,9 @@ class LoginInformationActivity : AppCompatActivity() {
         initialize()
     }
 
-    fun successLoginsButtonClicked()
-    {
-        try {
-            val adapter = mBinding.adapter!!
+    fun successLoginsButtonClicked() = threadPool.execute { successLoginsButtonClickedCallback() }
 
-            adapter.clear()
-
-            dataService.findSuccessLoginInfoByUserName(mLoginInfo.username).forEach { adapter.add(it) }
-
-        }
-        catch (ex: DataServiceException){
-            Toast.makeText(this, "Data Problem:${ex.message}", Toast.LENGTH_LONG).show()
-        }
-        catch (ex: Throwable){
-            Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show()
-        }
-    }
-
-    fun  failLoginsButtonClicked()
-    {
-        try {
-            val adapter = mBinding.adapter!!
-
-            adapter.clear()
-
-            val logins = dataService.findFailLoginInfoByUserName(mLoginInfo.username)
-            if(logins.isNotEmpty())
-                logins.forEach { adapter.add(it) }
-            else
-                Toast.makeText(this, "No fail login", Toast.LENGTH_LONG).show()
-
-        }
-        catch (ex: DataServiceException){
-            Toast.makeText(this, "Data Problem:${ex.message}", Toast.LENGTH_LONG).show()
-        }
-        catch (ex: Throwable){
-            Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show()
-        }
-    }
+    fun  failLoginsButtonClicked() = threadPool.execute { failLoginsButtonClickedCallback() }
 
     fun loginInformationItemClicked(pos: Int)
     {
