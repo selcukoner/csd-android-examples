@@ -4,8 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.cso.android.app.payment.repository.IUserRepository
-import org.cso.android.app.payment.repository.UserRepository
+import org.cso.android.app.payment.repository.IUserDao
 import javax.inject.Singleton
 
 @Module
@@ -14,5 +13,5 @@ abstract class UserRepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindUserRepository(userRepository: UserRepository): IUserRepository
+    abstract fun bindUserRepository(userRepository: UserDao): IUserDao
 }

@@ -3,7 +3,7 @@ package org.cso.android.app.payment.repository.dal
 import com.karandev.util.data.repository.exception.RepositoryException
 import org.cso.android.app.payment.repository.ILoginInfoRepository
 import org.cso.android.app.payment.repository.IPaymentRepository
-import org.cso.android.app.payment.repository.IUserRepository
+import org.cso.android.app.payment.repository.IUserDao
 import org.cso.android.app.payment.repository.entity.LoginInfo
 import org.cso.android.app.payment.repository.entity.Payment
 import org.cso.android.app.payment.repository.entity.User
@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class PaymentApplicationHelper @Inject constructor() {
     @Inject
-    lateinit var userRepository: IUserRepository
+    lateinit var userRepository: IUserDao
 
     @Inject
     lateinit var loginInfoRepository: ILoginInfoRepository

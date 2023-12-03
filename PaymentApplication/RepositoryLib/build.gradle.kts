@@ -4,6 +4,8 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
 
+    id("com.google.devtools.ksp") // room ksp
+
 }
 
 android {
@@ -51,6 +53,15 @@ dependencies {
     kapt("com.google.dagger:hilt-compiler:2.48") //For Kotlin
 
     implementation("com.karandev:com-karandev-util-data:20.0.0")
+
+    // ROOM
+
+    val room_version = "2.6.0"
+    implementation("androidx.room:room-runtime:$room_version")
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:$room_version")
+// To use Kotlin Symbol Processing (KSP)
+    ksp("androidx.room:room-compiler:$room_version")
 
 
 }

@@ -25,7 +25,7 @@ import java.time.Month
 class PaymentRepositoryInstrumentedTest {
     companion object{
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        val userRepository = UserRepository(appContext)
+        val userRepository = UserDao(appContext)
         val paymentRepository = PaymentRepository(appContext)
     }
 
