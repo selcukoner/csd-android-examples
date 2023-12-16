@@ -17,6 +17,8 @@ class LoginInfoRepository @Inject constructor(@ApplicationContext var context: C
 
     private fun findByUserNameCallback(fis: FileInputStream, username: String): List<LoginInfo>
     {
+
+
         val list = ArrayList<LoginInfo>()
 
         try {
@@ -86,7 +88,7 @@ class LoginInfoRepository @Inject constructor(@ApplicationContext var context: C
         return user
     }
 
-    override fun <S : LoginInfo?> save(loginInfo: S): S
+    override fun < S : LoginInfo?> save(loginInfo: S): S
     {
         return context.openFileOutput(LOGIN_INFO_FILE, Context.MODE_APPEND).use { saveCallback(it, loginInfo) }
     }

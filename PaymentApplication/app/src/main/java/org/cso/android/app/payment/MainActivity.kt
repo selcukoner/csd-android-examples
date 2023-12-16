@@ -11,12 +11,13 @@ import org.cso.android.app.payment.data.service.mapper.IUserMapper
 import org.cso.android.app.payment.databinding.ActivityMainBinding
 import org.cso.android.app.payment.viewmodel.MainActivityListenerViewModel
 import java.time.LocalDate
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
-
     private fun initialize()
     {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -25,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initialize()
-
     }
 
     fun registerButtonClicked()
