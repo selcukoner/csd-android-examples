@@ -3,12 +3,11 @@ package org.cso.android.app.payment.repository.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.karandev.util.data.repository.ICrudRepository
 import org.cso.android.app.payment.repository.entity.User
 import org.cso.android.app.payment.repository.entity.join.UserPaymentInfo
 
 @Dao
-interface IUserDao : ICrudRepository<User, String> {
+interface IUserDao {
 
     @Query("SELECT * FROM users WHERE username = :username AND password = :password")
     fun findByUserNameAndPassword(username: String, password: String): User?

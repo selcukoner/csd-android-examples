@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.karandev.util.data.service.DataServiceException;
 
 import org.cso.android.app.payment.data.service.PaymentApplicationDataService;
-import org.cso.android.app.payment.data.service.dto.LoginInfoDTO;
+import org.cso.android.app.payment.data.service.dto.LoginInfoSaveDTO;
 import org.cso.android.app.payment.databinding.ActivityLoginBinding;
 import static org.cso.android.app.payment.global.keys.BundleKeyKt.LOGIN_INFO;
 import org.cso.android.app.payment.viewmodel.LoginActivityListenerViewModel;
@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     ScheduledExecutorService threadPool;
 
 
-    private void saveLoginInfoUIThreadCallback(LoginInfoDTO loginInfo)
+    private void saveLoginInfoUIThreadCallback(LoginInfoSaveDTO loginInfo)
     {
         Toast.makeText(this, "Access granted", Toast.LENGTH_LONG).show();
         startActivity(new Intent(this, OperationsActivity.class).putExtra(LOGIN_INFO, loginInfo));
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     {
         m_binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         m_binding.setViewModel(new LoginActivityListenerViewModel(this));
-        m_binding.setLoginInfo(new LoginInfoDTO());
+        m_binding.setLoginInfo(new LoginInfoSaveDTO());
     }
 
     private void init()

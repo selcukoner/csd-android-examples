@@ -7,9 +7,9 @@
 
     <data>
     <import type="org.cso.android.app.payment.viewmodel.LoginActivityListenerViewModel"/>
-    <import type="org.cso.android.app.payment.data.service.dto.LoginInfoDTO"/>
+    <import type="org.cso.android.app.payment.data.service.dto.LoginInfoSaveDTO"/>
         <variable name="viewModel" type="LoginActivityListenerViewModel" />
-        <variable name="loginInfo" type="org.cso.android.app.payment.data.service.dto.LoginInfoDTO" />
+        <variable name="loginInfo" type="org.cso.android.app.payment.data.service.dto.LoginInfoSaveDTO" />
 
 
     </data>

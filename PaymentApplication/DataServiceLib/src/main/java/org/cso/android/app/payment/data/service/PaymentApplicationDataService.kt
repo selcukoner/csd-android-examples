@@ -2,14 +2,14 @@ package org.cso.android.app.payment.data.service
 
 import com.karandev.util.data.repository.exception.RepositoryException
 import com.karandev.util.data.service.DataServiceException
-import org.cso.android.app.payment.data.service.dto.LoginInfoDTO
-import org.cso.android.app.payment.data.service.dto.LoginInfoStatusDTO
+import org.cso.android.app.payment.data.service.dto.LoginInfoSaveDTO
 import org.cso.android.app.payment.data.service.dto.PaymentSaveDTO
 import org.cso.android.app.payment.data.service.dto.UserSaveDTO
 import org.cso.android.app.payment.data.service.mapper.ILoginInfoMapper
 import org.cso.android.app.payment.data.service.mapper.IPaymentMapper
 import org.cso.android.app.payment.data.service.mapper.IUserMapper
 import org.cso.android.app.payment.repository.dal.PaymentApplicationHelper
+import org.cso.android.app.payment.data.service.dto.LoginInfoDTO
 import javax.inject.Inject
 
 class PaymentApplicationDataService @Inject constructor(
@@ -22,7 +22,7 @@ class PaymentApplicationDataService @Inject constructor(
     private val mUserMapper =userMapper
     private val mLoginInfoMapper = loginInfoMapper
     private val mPaymentMapper = paymentMapper
-    fun checkAndSaveLoginInfo(loginInfoDTO: LoginInfoDTO): Boolean
+    fun checkAndSaveLoginInfo(loginInfoDTO: LoginInfoSaveDTO): Boolean
     {
         try {
             if(!mPaymentApplicationHelper.existsUserByUserName(loginInfoDTO.username))
@@ -46,11 +46,12 @@ class PaymentApplicationDataService @Inject constructor(
         }
     }
 
-    fun findLoginInfoByUserName(username: String) : List<LoginInfoStatusDTO>
+    fun findLoginInfoByUserName(username: String) : List<LoginInfoDTO>
     {
         try{
-            return mPaymentApplicationHelper.findLoginInfoByUserName(username)
-                .map { mLoginInfoMapper.toLoginInfoStatusDTO(it) };
+            return mPaymentApplicationHelper.findLoginInfoByUserName(username).toList()
+                .map{mLoginInfoMapper.toLoginInfoDTO(it)}.toList()
+
         }
         catch (ex: RepositoryException){
             throw DataServiceException("PaymentApplicationDataService.findLoginInfoByUserName", ex.cause)
@@ -60,11 +61,11 @@ class PaymentApplicationDataService @Inject constructor(
         }
     }
 
-    fun findSuccessLoginInfoByUserName(username: String) : List<LoginInfoStatusDTO>
+    fun findSuccessLoginInfoByUserName(username: String) : List<LoginInfoDTO>
     {
         try{
             return mPaymentApplicationHelper.findSuccessLoginInfoByUserName(username)
-                .map { mLoginInfoMapper.toLoginInfoStatusDTO(it) };
+                .map { mLoginInfoMapper.toLoginInfoDTO(it) };
         }
         catch (ex: RepositoryException){
             throw DataServiceException("PaymentApplicationDataService.findSuccessLoginInfoByUserName", ex.cause)
@@ -73,11 +74,11 @@ class PaymentApplicationDataService @Inject constructor(
             throw DataServiceException("PaymentApplicationDataService.findSuccessLoginInfoByUserName", ex)
         }
     }
-    fun findFailLoginInfoByUserName(username: String) : List<LoginInfoStatusDTO>
+    fun findFailLoginInfoByUserName(username: String) : List<LoginInfoDTO>
     {
         try{
             return mPaymentApplicationHelper.findFailLoginInfoByUserName(username)
-                .map { mLoginInfoMapper.toLoginInfoStatusDTO(it) };
+                .map { mLoginInfoMapper.toLoginInfoDTO(it) };
         }
         catch (ex: RepositoryException){
             throw DataServiceException("PaymentApplicationDataService.findFailLoginInfoByUserName", ex.cause)
