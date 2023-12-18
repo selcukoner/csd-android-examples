@@ -25,9 +25,9 @@ class PaymentApplicationHelper @Inject constructor() {
     fun saveUser(user: User)
     {
         try {
-            return userDao.save(user)
+            userDao.save(user)
         }
-        catch (ex: IOException){
+        catch (ex: Throwable){
             throw RepositoryException("PaymentApplicationHelper.saveUser", ex)
         }
     }
@@ -105,6 +105,7 @@ class PaymentApplicationHelper @Inject constructor() {
         }
     }
 
+    /*
     fun findPaymentByUserName(username: String): List<UserToPayments>
     {
         try {
@@ -114,11 +115,12 @@ class PaymentApplicationHelper @Inject constructor() {
             throw RepositoryException("PaymentApplicationHelper.findPaymentByUserName", ex)
         }
     }
-
+*/
     fun savePayment(payment: Payment)
     {
         try {
             return paymentDao.save(payment)
+
         }
         catch (ex: IOException){
             throw RepositoryException("PaymentApplicationHelper.savePayment", ex)

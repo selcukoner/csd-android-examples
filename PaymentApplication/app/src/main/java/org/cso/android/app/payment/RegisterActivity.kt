@@ -18,7 +18,6 @@ import org.cso.android.app.payment.constant.what.register.WHAT_REGISTER_SUCCESS
 import org.cso.android.app.payment.constant.what.register.WHAT_REGISTER_USER_NOT_REGISTERED
 import org.cso.android.app.payment.data.service.PaymentApplicationDataService
 import org.cso.android.app.payment.data.service.dto.UserSaveDTO
-import org.cso.android.app.payment.data.service.mapper.IUserMapper
 import org.cso.android.app.payment.databinding.ActivityRegisterBinding
 import org.cso.android.app.payment.viewmodel.RegisterActivityListenerViewModel
 import java.lang.ref.WeakReference
@@ -43,12 +42,12 @@ class RegisterActivity : AppCompatActivity() {
         private fun handleUserNotRegistered()
         {
             val activity = mWeakReference.get()!!
-            Toast.makeText(activity, "${activity.mBinding.user!!.userName} can not be registered", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "${activity.mBinding.user!!.username} can not be registered", Toast.LENGTH_LONG).show()
         }
         private fun handleRegisterSuccess()
         {
             val activity = mWeakReference.get()!!
-            Toast.makeText(activity, "${activity.mBinding.user!!.userName} succesfully registered", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "${activity.mBinding.user!!.username} succesfully registered", Toast.LENGTH_LONG).show()
             Intent(activity, LoginActivity::class.java).apply { activity.startActivity(this) }
             activity.finish()
         }
@@ -67,6 +66,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun registerButtonClickedCallback()
     {
+
         try {
             val user = mBinding.user!!
 
@@ -75,12 +75,13 @@ class RegisterActivity : AppCompatActivity() {
                 return
             }
 
-            if(dataService.saveUser(user))
+            if(dataService.saveUser(user)){
+
                 mHandler.sendEmptyMessage(WHAT_REGISTER_SUCCESS)
+            }
             else
 
                 mHandler.sendEmptyMessage(WHAT_REGISTER_USER_NOT_REGISTERED)
-
         }
         catch (ex: DataServiceException){
             mHandler.sendMessage(mHandler.obtainMessage(WHAT_REGISTER_DATA_SERVICE_EXCEPTION, ex.message))

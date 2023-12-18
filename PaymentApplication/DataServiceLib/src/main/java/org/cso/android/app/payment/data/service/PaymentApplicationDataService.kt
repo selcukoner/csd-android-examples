@@ -10,6 +10,7 @@ import org.cso.android.app.payment.data.service.mapper.IPaymentMapper
 import org.cso.android.app.payment.data.service.mapper.IUserMapper
 import org.cso.android.app.payment.repository.dal.PaymentApplicationHelper
 import org.cso.android.app.payment.data.service.dto.LoginInfoDTO
+import java.lang.Exception
 import javax.inject.Inject
 
 class PaymentApplicationDataService @Inject constructor(
@@ -90,20 +91,16 @@ class PaymentApplicationDataService @Inject constructor(
 
     fun saveUser(userSaveDTO: UserSaveDTO): Boolean
     {
-        var result = false
-
         try {
-            mPaymentApplicationHelper.saveUser(mUserMapper.toUser(userSaveDTO)) != null
-            result = true
+            mPaymentApplicationHelper.saveUser(mUserMapper.toUser(userSaveDTO))
+            return true
         }
         catch (ex: RepositoryException){
-
-            throw DataServiceException("PaymentApplicationDataService.saveUser", ex.cause)
+            throw DataServiceException("PaymentApplicationDataService.saveUser ${userSaveDTO.toString()}", ex.cause)
         }
         catch (ex: Throwable){
-            throw DataServiceException("PaymentApplicationDataService.saveUser", ex)
+            throw DataServiceException("PaymentApplicationDataService.saveUser ", ex)
         }
-        return result
     }
 
     fun savePayment(paymentSaveDTO: PaymentSaveDTO)

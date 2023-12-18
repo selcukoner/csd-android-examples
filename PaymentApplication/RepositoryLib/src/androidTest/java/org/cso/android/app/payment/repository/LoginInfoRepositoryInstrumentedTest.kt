@@ -3,34 +3,32 @@ package org.cso.android.app.payment.repository
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import org.cso.android.app.payment.repository.dao.ILoginInfoDao
 import org.cso.android.app.payment.repository.dao.IUserDao
 import org.cso.android.app.payment.repository.database.PaymentApplicationDatabase
+import org.cso.android.app.payment.repository.entity.LoginInfo
 import org.cso.android.app.payment.repository.entity.User
-import org.junit.Assert.*
+import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
 import java.time.LocalDate
 import java.time.Month
 
-/**
- * Instrumented test, which will execute on an Android device.
- *
- * See [testing documentation](http://d.android.com/tools/testing).
- */
-
 @RunWith(AndroidJUnit4::class)
-class UserRepositoryInstrumentedTest {
+class LoginInfoRepositoryInstrumentedTest {
     companion object {
         private val appContext  = InstrumentationRegistry.getInstrumentation().targetContext
     }
 
     var database: PaymentApplicationDatabase? = null
-    private lateinit var userDao : IUserDao
+    private lateinit var loginInfoDao : ILoginInfoDao
+    private lateinit var userDao: IUserDao
 
     private fun createDatabase()
     {
         database = Room.databaseBuilder(appContext, PaymentApplicationDatabase::class.java, "paymentdb-test.sqlite3").build()
+        loginInfoDao = database!!.createLoginInfoDao()
         userDao = database!!.createUserDao()
     }
 
@@ -47,74 +45,55 @@ class UserRepositoryInstrumentedTest {
                 file.delete()
     }
 
-    private fun saveUsers()
+    private fun saveData()
     {
         val user1 = User("alican", "alican1234", "Alican", "Keçici", LocalDate.of(1989, Month.JANUARY, 5), LocalDate.now())
         val user2 = User("umut", "umut123", "Umut", "Utku", "Kırmızıgül", LocalDate.of(1995, Month.OCTOBER, 12), LocalDate.now())
 
         userDao.save(user1)
         userDao.save(user2)
+
+        val loginInfo1 = LoginInfo(1, "alican", success = true)
+        val loginInfo2 = LoginInfo(2, "umut", success = true)
+        val loginInfo4 = LoginInfo(3, "umut", success = false)
+
+        loginInfoDao.save(loginInfo1)
+        loginInfoDao.save(loginInfo2)
+        loginInfoDao.save(loginInfo4)
+
     }
 
     private fun initialize()
     {
         deleteDatabaseFiles()
-        saveUsers()
+        saveData()
     }
 
     @Test
-    fun save_and_findByUserNameAndPasswordSuccessTest()
+    fun findByUserNameAndSuccessLoginCountTest()
     {
         initialize()
-        assertNotNull(userDao.findByUserNameAndPassword("umut", "umut123"))
+        Assert.assertEquals(1, loginInfoDao.findSuccessByUserName("alican").size)
     }
 
     @Test
-    fun save_and_findByUserNameAndPasswordPasswordFailTest()
+    fun findByUserNameAndFailLoginCountTest()
     {
         initialize()
-        assertNull(userDao.findByUserNameAndPassword("alican", "alican123"))
+        Assert.assertEquals(1, loginInfoDao.findFailsByUserName("umut").size)
     }
 
     @Test
-    fun save_and_findByUserNameAndPasswordUsernameFailTest()
+    fun findByUserName_UsernameTrueTest()
     {
         initialize()
-        assertNull(userDao.findByUserNameAndPassword("baturhan", "alican1234"))
+        Assert.assertEquals(2, loginInfoDao.findByUserName("umut").size)
     }
 
     @Test
-    fun save_and_findByUserNameAndPasswordBothFailTest()
+    fun findByUserName_UserNameFalseTest()
     {
         initialize()
-        assertNull(userDao.findByUserNameAndPassword("baturhan", "baturhan"))
-    }
-
-    @Test
-    fun existsByUserNameAndPasswordSuccessTest()
-    {
-        initialize()
-        assertTrue(userDao.existsByUserNameAndPassword("umut", "umut123"))
-    }
-
-    @Test
-    fun existsByUserNameAndPasswordPasswordFailTest()
-    {
-        initialize()
-        assertFalse(userDao.existsByUserNameAndPassword("umut", "umut12"))
-    }
-
-    @Test
-    fun existsByUserNameAndPasswordUsernameFailTest()
-    {
-        initialize()
-        assertFalse(userDao.existsByUserNameAndPassword("umu", "umut123"))
-    }
-
-    @Test
-    fun existsByUserNameAndPasswordBothFailTest()
-    {
-        initialize()
-        assertFalse(userDao.existsByUserNameAndPassword("erkan", "erkan123"))
+        Assert.assertEquals(0, loginInfoDao.findByUserName("baturhan").size)
     }
 }
