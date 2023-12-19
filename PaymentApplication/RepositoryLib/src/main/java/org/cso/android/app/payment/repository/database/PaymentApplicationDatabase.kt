@@ -12,7 +12,7 @@ import org.cso.android.app.payment.repository.entity.LoginInfo
 import org.cso.android.app.payment.repository.entity.Payment
 import org.cso.android.app.payment.repository.entity.User
 
-@Database(entities = [User::class, Payment::class, LoginInfo::class], version = 1, exportSchema = false)
+@Database(entities = [User::class, Payment::class, LoginInfo::class], version = 2, exportSchema = false)
 @TypeConverters(LocalDateTimeConverter::class, LocalDateConverter::class)
 abstract class PaymentApplicationDatabase : RoomDatabase() {
     abstract fun createUserDao() : IUserDao

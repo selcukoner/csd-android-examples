@@ -50,7 +50,7 @@ class LoginInformationActivity : AppCompatActivity() {
     private fun  failLoginsButtonClickedCallback()
     {
         try {
-           mBinding.adapter!!.clear()
+           runOnUiThread { mBinding.adapter!!.clear()}
 
             val logins = dataService.findFailLoginInfoByUserName(mLoginInfo.username)
 
@@ -64,7 +64,7 @@ class LoginInformationActivity : AppCompatActivity() {
             runOnUiThread {Toast.makeText(this, "Data Problem:${ex.message}", Toast.LENGTH_LONG).show()}
         }
         catch (ex: Throwable){
-            runOnUiThread { Toast.makeText(this, "Problem Occured. Try again later", Toast.LENGTH_LONG).show() }
+            runOnUiThread { Toast.makeText(this, "Problem Occured. Try again later ${ex.message}", Toast.LENGTH_LONG).show() }
         }
     }
 

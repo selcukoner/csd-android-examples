@@ -7,8 +7,6 @@ import org.cso.android.app.payment.repository.dao.IUserDao
 import org.cso.android.app.payment.repository.entity.LoginInfo
 import org.cso.android.app.payment.repository.entity.Payment
 import org.cso.android.app.payment.repository.entity.User
-import org.cso.android.app.payment.repository.entity.join.UserToPayments
-
 import java.io.IOException
 import javax.inject.Inject
 
